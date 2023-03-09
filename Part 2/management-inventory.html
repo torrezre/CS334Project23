@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Inventory Manager</title>
+		<link rel="stylesheet" href="management.css">
+	</head>
+	<body>
+		<div class="navbar">
+			<a href="management-login.html"><div class="icon logon"></div>Login</a>
+			<a class="active" href="#"><div class="icon inventory"></div>Inventory</a>
+			<a href="management-orders.html"><div class="icon orders"></div>Orders</a>
+		</div>
+		<h1>Inventory Manager</h1>
+		<div id="menu">
+			<button class="btn paletas" onclick="showPaletas()">Paletas</button>
+			<button class="btn mochi" onclick="showMochi()">Mochi</button>
+			<button class="btn sandwiches" onclick="showSandwiches()">Ice Cream Sandwiches</button>
+			<button class="btn bars" onclick="showBars()">Ice Cream Bars</button>
+			<button class="btn gallons" onclick="showGallons()">Gallons and Pints</button>
+		</div>
+		<div id="products">
+			<br>
+			<img id="productimage" src="Images/paletas.jpg" alt="paleta">
+			<br>
+			<table id="producttable1">
+				<tr>
+					<th>Product</th>
+					<th>Sale Price</th>
+					<th>Order Price</th>
+					<th>Stock</th>
+					<th>Order</th>
+				</tr>
+				<tr>
+					<td class="prodname">Strawberry Paleta (9 Pack)</td>
+					<td>$7.95</td>
+					<td>$1.25</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Pineapple Paleta (9 Pack)</td>
+					<td>$7.95</td>
+					<td>$1.25</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Mango Paleta (9 Pack)</td>
+					<td>$7.95</td>
+					<td>$1.25</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Lime Paleta (9 Pack)</td>
+					<td>$7.95</td>
+					<td>$1.25</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+			</table>
+			
+			<table id="producttable2">
+				<tr>
+					<th>Product</th>
+					<th>Sale Price</th>
+					<th>Order Price</th>
+					<th>Stock</th>
+					<th>Order</th>
+				</tr>
+				<tr>
+					<td class="prodname">Green Tea Mochi (8 Pack)</td>
+					<td>$5.29</td>
+					<td>$0.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Chocoloate Mochi (8 Pack)</td>
+					<td>$5.29</td>
+					<td>$0.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Mango Mochi (8 Pack)</td>
+					<td>$5.29</td>
+					<td>$0.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Strawberry Mochi (8 Pack)</td>
+					<td>$5.29</td>
+					<td>$0.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Vanilla Mochi (8 Pack)</td>
+					<td>$5.29</td>
+					<td>$0.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Dulce de Leche Mochi (8 Pack)</td>
+					<td>$5.29</td>
+					<td>$0.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">6 Variety Pack Mochi (48 Count)</td>
+					<td>$29.95</td>
+					<td>$3.50</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+			</table>
+				
+			<table id="producttable3">
+				<tr>
+					<th>Product</th>
+					<th>Sale Price</th>
+					<th>Order Price</th>
+					<th>Stock</th>
+					<th>Order</th>
+				</tr>
+				<tr>
+					<td class="prodname">Vanilla Ice Cream Sandwiches (12 Pack, 3.5 oz each)</td>
+					<td>$3.95</td>
+					<td>$0.35</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Chocolate Ice Cream Sandwiches (12 Pack, 3.5 oz each)</td>
+					<td>$3.95</td>
+					<td>$0.35</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Double Chocolate Ice Cream Sandwiches (12 Pack, 3.5 oz each)</td>
+					<td>$3.95</td>
+					<td>$0.35</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+			</table>
+			
+			<table id="producttable4">
+				<tr>
+					<th>Product</th>
+					<th>Sale Price</th>
+					<th>Order Price</th>
+					<th>Stock</th>
+					<th>Order</th>
+				</tr>
+				<tr>
+					<td class="prodname">Plain Ice Cream Bars (4 Pack, 3.5 oz each)</td>
+					<td>$7.00</td>
+					<td>$0.70</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Ice Cream Bars With Peanuts (4 Pack, 3.5 oz each)</td>
+					<td>$7.00</td>
+					<td>$0.70</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Caramel Ice Cream Bars (4 Pack, 3.5 oz each)</td>
+					<td>$7.00</td>
+					<td>$0.70</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Caramel Ice Cream Bars With Peanuts (4 Pack, 3.5 oz each)</td>
+					<td>$7.00</td>
+					<td>$0.70</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+			</table>
+			
+			<table id="producttable5">
+				<tr>
+					<th>Product</th>
+					<th>Sale Price</th>
+					<th>Order Price</th>
+					<th>Stock</th>
+					<th>Order</th>
+				</tr>
+				<tr>
+					<td class="prodname">Chocolate Ice Cream (1 Gallon)</td>
+					<td>$7.75</td>
+					<td>$2.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Vanilla Ice Cream (1 Gallon)</td>
+					<td>$7.75</td>
+					<td>$2.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Mint Chocolate Chip Ice Cream (1 Gallon)</td>
+					<td>$7.75</td>
+					<td>$2.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Cookies and Cream Ice Cream (1 Gallon)</td>
+					<td>$7.75</td>
+					<td>$2.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Mango Ice Cream (1 Gallon)</td>
+					<td>$7.75</td>
+					<td>$2.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Pecan Pralines Ice Cream (1 Gallon)</td>
+					<td>$7.75</td>
+					<td>$2.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+				<tr>
+					<td class="prodname">Rocky Road Ice Cream (1 Gallon)</td>
+					<td>$7.75</td>
+					<td>$2.75</td>
+					<td>15</td>
+					<td><button class="orderBtn">Order Now</button></td>
+				</tr>
+			</table>
+		</div>
+		<script>
+			function showPaletas() {
+				//Hide all tables, and then reveal the Paletas table and product image
+				hideTables();
+				document.getElementById("producttable1").style.display = "inline";
+				document.getElementById("productimage").style.display = "inline-block";
+				document.getElementById("productimage").src = "Images/paletas.jpg";
+			}
+			
+			function showMochi() {
+				//Hide all tables, and then reveal the Mochi table and product image
+				hideTables();
+				document.getElementById("producttable2").style.display = "inline";
+				document.getElementById("productimage").style.display = "inline-block";
+				document.getElementById("productimage").src = "Images/mochi.png";
+			}
+			
+			
+			function showSandwiches() {
+				//Hide all tables, and then reveal the Sandwiches table and product image
+				hideTables();
+				document.getElementById("producttable3").style.display = "inline";
+				document.getElementById("productimage").style.display = "inline-block";
+				document.getElementById("productimage").src = "Images/sandwiches.jpg";
+			}
+			
+			
+			function showBars() {
+				//Hide all tables, and then reveal the Mochi table and product image
+				hideTables();
+				document.getElementById("producttable4").style.display = "inline";
+				document.getElementById("productimage").style.display = "inline-block";
+				document.getElementById("productimage").src = "Images/bars.jpg";
+			}
+			
+			
+			function showGallons() {
+				//Hide all tables, and then reveal the Gallons table and product image
+				hideTables();
+				document.getElementById("producttable5").style.display = "inline";
+				document.getElementById("productimage").style.display = "inline-block";
+				document.getElementById("productimage").src = "Images/gallons.png";
+			}
+			
+			//Function to hide tables
+			function hideTables(){
+				document.getElementById("producttable1").style.display = "none";
+				document.getElementById("producttable2").style.display = "none";
+				document.getElementById("producttable3").style.display = "none";
+				document.getElementById("producttable4").style.display = "none";
+				document.getElementById("producttable5").style.display = "none";
+			}
+			
+		</script>
+	</body>
+</html>
