@@ -1,0 +1,220 @@
+/*Univesral Management Pages Styles */
+body{	
+	text-align: center;
+}
+
+table{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+th{
+	padding: 10px;
+}
+
+td{
+	padding: 3px;
+}
+
+button{
+	transition-duration: 0.5s;
+	padding: 4px 10px;
+}
+
+input{
+	font-size: 14px;
+	padding: 6px;
+}
+
+/* Top navigation bar for management pages*/
+.navbar {
+	height: 40px;
+	width: 100%;
+	background-color: #999;
+	overflow: hidden;
+}
+
+.navbar a {
+	float: left;
+	text-align: center;
+	padding: 10px;
+	color: white;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+.navbar a:hover {
+	background-color: #777;
+}
+
+.icon {
+	width: 26px;
+	height: 30px;
+	background-position: 10% 0%;
+	background-size: 20px;
+	background-repeat: no-repeat;
+	float: left;
+}
+
+.active {
+	background-color: #3e7cc2;
+}
+
+.logon {
+	background-image: url("images/login.png");
+}
+.inventory {
+	background-image: url("images/inventory.png");
+}
+
+.orders {
+	background-image: url("images/orders.png");
+}
+
+
+/* Responsive design - vertical navbar if screen is less than 500 pixels*/
+@media screen and (max:width: 500px) {
+	.navbar a {
+		float: none;
+		display: block;
+	}
+}
+
+/* Manager Login Page */
+#login{
+	box-shadow: 0px 0px 10px;
+	width: 30%;
+	min-width: 300px;
+	max-width: 450px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 15px;
+}
+
+#loginbtn, #logoutbtn{
+	padding: 5px 10px;
+	margin: 5px;
+}
+
+#loginbtn{
+	border: 2px solid #87FF4F;
+	background-color: #60EC1F;
+	border-radius: 8px;
+}
+#loginbtn:hover{
+	background-color: #87FF4F;;
+}
+
+#logoutbtn{
+	border: 2px solid yellow;
+	background-color: #EFF775;
+	border-radius: 8px;
+}
+#logoutbtn:hover{
+	background-color: #F7FF82;
+}
+
+/* Inventory Management Page */
+/* Product category menu */
+.btn {
+	border: 2px solid black;
+	background-color: white;
+	color: black;
+	padding: 10px 20px;
+	font-size: 16px;
+	cursor: pointer;	
+	border-radius: 15px;
+}
+
+.paletas {
+	border-color: #f44336;
+	color: red;
+}
+
+.paletas:hover {
+	background: #f44336;
+	color: white;
+}
+
+.mochi {
+	border-color: #04AA6D;
+	color: green;
+}
+
+.mochi:hover {
+	background: #04AA6D;
+	color: white;
+}
+
+.bars {
+  border-color: #ff9800;
+  color: orange;
+}
+
+.bars:hover {
+	background: #ff9800;
+	color: white;
+}
+
+.sandwiches {
+	border-color: #9932CC;
+    color: purple;	
+}
+
+.sandwiches:hover {
+	background: #9932CC;
+	color: white;
+}
+
+.gallons {	
+	border-color: #2196F3;
+	color: dodgerblue;
+}
+
+.gallons:hover {	
+	background: #2196F3;
+	color: white;
+}
+
+/* Product Tables */
+#products img{
+	width: 300px;
+	height: 300px;
+	object-position: 80% 0%;
+	object-fit: cover;
+	display: none;
+}
+
+#products table{
+	display: none;
+}
+
+.prodname{
+	text-align: left;
+}
+
+.custname{
+	text-align: left;
+}
+
+/* Order Management Page */
+.update{
+	font-weight: 600;
+	background: #49A24C;
+	border: 2px solid #49A24C;
+}
+
+.update:hover{
+	background: #6FEA74;
+}
+
+.cancel{
+	font-weight: 600;
+	background: #B33306;
+	border: 2px solid #B33306;
+}
+
+
+.cancel:hover{
+	background: #E67852;
+}
