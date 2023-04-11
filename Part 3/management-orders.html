@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Order Manager</title>
+		<link rel="stylesheet" href="management.css">
+	</head>
+	<body>
+	<div class="navbar">
+		<a href="management-login.html"><i class="icon logon"></i>Login</a>
+		<a href="management-inventory.html"><i class="icon inventory"></i>Inventory</a>
+		<a class="active" href="#"><i class="icon orders"></i>Orders</a>
+	</div>
+	<h1>Order Manager</h1>
+	<div id="main">
+		<input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for customers..."><br><br>
+		<table id="orderTable"></table>
+	</div>
+	<script>
+    //Get login state from JSON
+	let loginState = JSON.parse(localStorage.getItem('login'));
+		
+	//Change form based on login state
+	if (loginState == "in"){
+	}
+	else {
+		document.getElementById('main').innerHTML = "<h2>Access Denied. Please Login <a href='management-login.html'>Here</a></h2>";
+	}	
+	
+	// Open the WebSQL Order tabase
+    var db = openDatabase('orderDB', '1.0', 'Order Database', 5 * 1024 * 1024);
+
+    // Function to initialize the database and create a table 
+    function initializeDB() {
+      db.transaction(function(tx) {
+        tx.executeSql('CREATE TABLE IF NOT EXISTS WebOrders (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, products TEXT, order_total TEXT, address TEXT)');
+		});
+    }
+	
+	//Get Order population state from JSON
+	let orderPop = JSON.parse(localStorage.getItem('orderPop'));
+		
+	//Populate the order SQL table in the database with default data if it hasn't been already been populated
+	if (orderPop == "true"){
+	}
+	else {
+		populateOrdersData();
+	}
+	
+	// Function to populate the Order SQL table
+	function populateOrdersData() {		
+      db.transaction(function(tx) {
+		tx.executeSql('INSERT INTO WebOrders(name, products, order_total, address) VALUES("Bob Jones", "Strawberry Paleta (9 Pack)<br>6 Variety Pack Mochi (48 Count)", "$37.90", "12312 Gitoffadis Rd SE<br>Albuquerque, NM, 87123")');
+		tx.executeSql('INSERT INTO WebOrders(name, products, order_total, address) VALUES("Skip Chadwell", "Rocky Road Ice Cream (1 Gallon)", "$7.75", "1111 This Aint A Real Rd<br>Albuquerque, NM, 87123" )');
+      });
+	  // Save JSON object to show that the Order data has been populated
+	  let population = []
+	  population.push("true")
+	  localStorage.setItem('orderPop', JSON.stringify(population));
+	}
+	
+	// Function to fetch all orders from the database ordered by customer name 
+	// Also adds update and cancel buttons for each order
+	function fetchOrders() {
+	   var orderTable = document.getElementById('orderTable');
+		orderTable.innerHTML = '<tr>	<th>Order Number</th> <th>Customer Name</th> <th>Items</th> <th>Total</th>  <th>Address</th> <th>Actions</th> </tr>';
+
+		db.transaction(function(tx) {
+			tx.executeSql('SELECT * FROM WebOrders', [], function(tx, result) {
+				var len = result.rows.length;
+				for (var i = 0; i < len; i++) {
+					var row = result.rows.item(i);
+					var listItem = document.createElement('tr');
+					listItem.innerHTML = "<td>" + row.id + '</td><td>' + row.name + '</td><td>' + row.products + '</td><td>' + row.order_total + '</td><td>' + row.address + "</td><td>" +
+					'<button onclick="editOrder(' + row.id + ')" class="update">Edit</button>' +
+					'<button onclick="deleteOrder(' + row.id + ')" class="cancel">Delete</button></td>';
+					orderTable.appendChild(listItem);
+				}
+			}, function(error) {
+				console.error("Error executing SQL query: " + error.message);
+			});
+		});
+	}
+
+	/*
+			
+	*/
+		
+	// Function to edit a product in the database
+	function editOrder(id) {
+	  var name = prompt('Enter updated Customer name:');
+	  var products = prompt('Enter updated list of Products on Order:');
+	  var total = prompt('Enter updated Order Total:');
+	  var address = prompt('Enter updated Shipping Address:');
+
+	  if (name === '' || products === '' || total === '' || address === '' ||
+		  name === null || products === null || total === null || address === null) {
+		alert('Please enter all Order information and try again.');
+		return;
+	  }
+
+	  db.transaction(function(tx) {
+		tx.executeSql('UPDATE WebOrders SET name = ?, products = ?, order_total = ?, address = ? WHERE id = ?', [name, products, total, address, id], function() {
+		  alert('Order updated successfully.');
+		  fetchOrders();
+		});
+	  });
+	}
+
+	// Function to delete a product from the database
+	function deleteOrder(id) {
+	  var confirmDelete = confirm('Are you sure you want to delete this order?');
+	  if (confirmDelete) {
+		db.transaction(function(tx) {
+		  tx.executeSql('DELETE FROM WebOrders WHERE id = ?', [id], function() {
+			alert('Order deleted successfully.');
+			fetchOrders();
+		  }, function(error) {
+				console.error("Error executing SQL query: " + error.message);
+			});
+		});
+	  }
+	}
+	
+	// Function to search for orders by customer name
+	function searchTable() {
+	// Declare variables
+	var input, filter, table, tr, td, i, txtValue;
+	input = document.getElementById("myInput");
+	filter = input.value.toUpperCase();
+	table = document.getElementById("orderTable");
+	tr = table.getElementsByTagName("tr");
+
+	// Loop through all table rows, and hide those who don't match the search query
+	for (i = 0; i < tr.length; i++) {
+		td = tr[i].getElementsByTagName("td")[1];
+		if (td) {
+			txtValue = td.textContent || td.innerText;
+			if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				tr[i].style.display = "";
+			} else {
+				tr[i].style.display = "none";
+			}
+		}
+	  }
+	}   
+
+	// Initialize the database and fetch Orders when the page loads
+	window.onload = function() {
+	  initializeDB();
+	  fetchOrders();
+	};
+	</script>
+	</body>
+</html>
