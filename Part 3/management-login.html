@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Manager Login</title>
+		<link rel="stylesheet" href="management.css">
+	</head>
+	<body>
+	<div class="navbar">
+		<a class="active" href="#"><i class="icon logon"></i>Login</a>
+		<a href="management-inventory.html"><i class="icon inventory"></i>Inventory</a>
+		<a href="management-orders.html"><i class="icon orders"></i>Orders</a>
+	</div>
+	<div id="login">
+		<h1 id="header">Manager Login</h1>
+		<form id="myForm">
+			<label for="email">Username</label>
+			<input type="text" id="email" name="email"><br><br>
+			<label for="password">Password</label>
+			<input type="password" id="pw" name ="pw"><br><br>
+			<input type="button" id="loginbtn" onclick="login(document.getElementById('email').value, document.getElementById('pw').value)" value="Sign in">
+		</form>
+		<input type="button" id="logoutbtn" onclick="saveLoginState('out')" value="Sign out">
+	</div>
+	<p id="status"></p>
+	<script>
+		//Open/create the manager user database
+		var db = openDatabase('managerdb', 1.0, 'Manager DB', 2 * 1024 * 1024);
+		var msg;
+		
+		//Create manager login table if it doesn't exist, and add the Admin login account (username: Admin, Password: Admin123)
+		db.transaction(function (tx) {
+			tx.executeSql('CREATE TABLE IF NOT EXISTS Users (id unique, user, password)');
+			tx.executeSql('INSERT INTO Users(id, user, password) VALUES(1, "Admin", "Admin123")');
+		}) 
+		
+		//Take input from enter key on password field
+		document.querySelector('#pw').addEventListener('keypress', function (e) {
+			if (e.key === 'Enter') {
+				login(document.getElementById('email').value, document.getElementById('pw').value)
+			}
+		});
+		
+		//Get login state from JSON
+		let loginState = JSON.parse(localStorage.getItem('login'));
+		
+		//Change form based on login state
+		if (loginState == "in"){
+			document.getElementById('myForm').style.display = "none";
+			document.getElementById('header').innerHTML = "Manager Logout";
+		}
+		else {
+			document.getElementById('logoutbtn').style.display = "none";
+		}
+			
+		//Login function checks SQL database for a match on the username and password entered.  If there's a match, the new login state is saved.
+		function login(username, password) {
+			db.transaction(function (tx) { 
+				tx.executeSql('SELECT * FROM Users WHERE user=? AND password=?', [username, password], function (tx, results) { 
+				   if (results.rows.length > 0){
+						saveLoginState("in")
+				   }
+				}, null); 
+			 });
+		}
+		
+		//Save login state on login and logout
+		function saveLoginState(state) {
+			let login = []
+			login.push(state)
+            localStorage.setItem('login', JSON.stringify(login));
+            window.location.href = 'management-login.html';
+		}
+		
+	</script>
+</body>
+</html>
