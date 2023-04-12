@@ -27,7 +27,7 @@
 	}	
 	
 	// Open the WebSQL Order tabase
-    var db = openDatabase('orderDB', '1.0', 'Order Database', 5 * 1024 * 1024);
+    var db = openDatabase('pickleDB', '1.0', 'Order Database', 5 * 1024 * 1024);
 
     // Function to initialize the database and create a table 
     function initializeDB() {
@@ -38,13 +38,6 @@
 	
 	//Get Order population state from JSON
 	let orderPop = JSON.parse(localStorage.getItem('orderPop'));
-		
-	//Populate the order SQL table in the database with default data if it hasn't been already been populated
-	if (orderPop == "true"){
-	}
-	else {
-		populateOrdersData();
-	}
 	
 	// Function to populate the Order SQL table
 	function populateOrdersData() {		
@@ -56,6 +49,7 @@
 	  let population = []
 	  population.push("true")
 	  localStorage.setItem('orderPop', JSON.stringify(population));
+	  fetchOrders();
 	}
 	
 	// Function to fetch all orders from the database ordered by customer name 
@@ -121,6 +115,26 @@
 	  }
 	}
 	
+	// Function to check if SQL table is empty and populate with default data if it is.
+	function fillIfEmpty() {
+		db.transaction(function(tx) {
+			tx.executeSql('SELECT * FROM WebOrders', [], function(tx, result) {
+				var len = result.rows.length;
+				if (len == 0){
+					console.log("Orders SQL Table is empty. Populating SQL Data.");
+					populateOrdersData();
+					return true;
+				}
+				else {
+					console.log("Orders SQL Table is not empty.");
+					return false;
+				}
+				})
+			}, function(error) {
+				console.error("Error executing SQL query: " + error.message);
+		});
+	}
+	
 	// Function to search for orders by customer name
 	function searchTable() {
 	// Declare variables
@@ -144,11 +158,12 @@
 	  }
 	}   
 
-	// Initialize the database and fetch Orders when the page loads
+	// Initialize the database and fill and fetch Orders when the page loads
 	window.onload = function() {
 	  initializeDB();
+	  fillIfEmpty();
 	  fetchOrders();
-	};
+	 }
 	</script>
 	</body>
 </html>

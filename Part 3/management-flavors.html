@@ -48,7 +48,7 @@
 	}
 	
     // Open the WebSQL database
-    var db = openDatabase('flavorDB', '1.0', 'Flavor Database', 5 * 1024 * 1024);
+    var db = openDatabase('flashDB', '1.0', 'Flavor Database', 5 * 1024 * 1024);
 
     // Function to initialize the database and create a table 
     function initializeDB() {
@@ -63,11 +63,11 @@
 		
 	// If the data for the SQL Product table hasn't been populated, populate it with starting data
 	if (populationState == "true"){
+		console.log("Flavors populated already.");
 	}
 	else {
-		populateData();
+		console.log("Flavors populated already.")
 	}
-	
 	
 	// Function to populatee SQL product table with existing products
 	function populateData() {
@@ -107,6 +107,8 @@
 		let population = []
 		population.push("true")
         localStorage.setItem('populated', JSON.stringify(population));
+		
+		fetchProducts();
     }
 	
     // Function to add a new flavor to the database
@@ -184,10 +186,31 @@
         });
       }
     }
+	
+	// Function to check if SQL table is empty and populate with default data if it is.
+	function fillIfEmpty() {
+		db.transaction(function(tx) {
+			tx.executeSql('SELECT * FROM WebOrders', [], function(tx, result) {
+				var len = result.rows.length;
+				if (len == 0){
+					console.log("Orders SQL Table is empty. Populating SQL Data.");
+					populateData();
+					return true;
+				}
+				else {
+					console.log("Orders SQL Table is not empty.");
+					return false;
+				}
+				})
+			}, function(error) {
+				console.error("Error executing SQL query: " + error.message);
+		});
+	}
 
-    // Initialize the database and fetch products when the page loads
+    // Initialize the database and fill and fetch products when the page loads
     window.onload = function() {
       initializeDB();
+	  fillIfEmpty();
       fetchProducts();
     };
   </script>

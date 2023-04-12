@@ -42,7 +42,7 @@
 		}	
 		
 		// Open the WebSQL database
-		var db = openDatabase('flavorDB', '1.0', 'Flavor Database', 5 * 1024 * 1024);
+		var db = openDatabase('flashDB', '1.0', 'Flavor Database', 5 * 1024 * 1024);
 
 		// Function to initialize the database and create a table 
 		function initializeDB() {
@@ -52,16 +52,6 @@
 			});
 		}
 		
-		// Get data population state from JSON
-		let populationState = JSON.parse(localStorage.getItem('populated'));
-			
-		// If the data for the SQL Product table hasn't been populated, populate it with starting data
-		if (populationState == "true"){
-		}
-		else {
-			populateData();
-		}
-	
 		// Function to populatee SQL product table with existing products
 		function populateData() {
 			db.transaction(function(tx) {
@@ -102,7 +92,7 @@
 			localStorage.setItem('populated', JSON.stringify(population));
 		}
 		
-		 // Function to fetch  products from the database  by category 
+		// Function to fetch  products from the database  by category 
 		// Also adds edit and delete buttons for each product
 		function fetchProducts(category) {
 		
@@ -124,10 +114,29 @@
 		  });
 		}
 		
+		// Function to check if SQL table is empty and populate with default data if it is.
+		function fillIfEmpty() {
+			db.transaction(function(tx) {
+				tx.executeSql('SELECT * FROM Flavors', [], function(tx, result) {
+					var len = result.rows.length;
+					if (len == 0){
+						console.log("Orders SQL Table is empty. Populating SQL Data.");
+						populateData();
+						return true;
+					}
+					else {
+						console.log("Orders SQL Table is not empty.");
+						return false;
+					}
+					})
+				}, function(error) {
+					console.error("Error executing SQL query: " + error.message);
+			});
+		}
+		
 		function showPaletas() {
 			document.getElementById("productimage").src = "images/paletas.jpg";
 			fetchProducts("Paletas");
-			console.log("Show paletas");
 		}
 			
 		function showMochi() {
@@ -152,7 +161,12 @@
 			document.getElementById("productimage").src = "images/gallons.png";
 			fetchProducts("Gallons and Pints");
 		}
-			
+		
+		// Initialize the database and fill products when the page loads
+		window.onload = function() {
+			initializeDB();
+			fillIfEmpty();
+		};
 		</script>
 	</body>
 </html>
