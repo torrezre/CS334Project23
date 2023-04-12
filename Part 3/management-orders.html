@@ -19,7 +19,7 @@
     //Get login state from JSON
 	let loginState = JSON.parse(localStorage.getItem('login'));
 		
-	//Change form based on login state
+	//Change page based on login state
 	if (loginState == "in"){
 	}
 	else {
@@ -35,9 +35,6 @@
         tx.executeSql('CREATE TABLE IF NOT EXISTS WebOrders (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, products TEXT, order_total TEXT, address TEXT)');
 		});
     }
-	
-	//Get Order population state from JSON
-	let orderPop = JSON.parse(localStorage.getItem('orderPop'));
 	
 	// Function to populate the Order SQL table
 	function populateOrdersData() {		
@@ -75,10 +72,6 @@
 		});
 	}
 
-	/*
-			
-	*/
-		
 	// Function to edit a product in the database
 	function editOrder(id) {
 	  var name = prompt('Enter updated Customer name:');
