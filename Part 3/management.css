@@ -178,12 +178,17 @@ input{
 }
 
 /* Product Tables */
-#products img{
+#producticon{
+	width: 50px;
+	height: 50px;
+}
+
+#productimage{
 	width: 300px;
 	height: 300px;
 	object-position: 80% 0%;
 	object-fit: cover;
-	display: none;
+	display:none;
 }
 
 .prodname{
@@ -194,30 +199,6 @@ input{
 	text-align: left;
 }
 
-/* Order Management Page */
-.update{
-	font-weight: 600;
-	background: #49A24C;
-	border: 2px solid #49A24C;
-}
-
-.update:hover{
-	background: #6FEA74;
-}
-
-.cancel{
-	font-weight: 600;
-	background: #B33306;
-	border: 2px solid #B33306;
-}
-
-
-.cancel:hover{
-	background: #E67852;
-}
-
-
-/* Flavor Management Page */ 
 .flavored {
   border-radius: 5px;
   background-color: #f2f2f2;
@@ -249,4 +230,26 @@ input{
 #formAlign{
 	display: inline-block;
 	text-align: right;
+}
+
+/* Order Management Page */
+.update{
+	font-weight: 600;
+	background: #49A24C;
+	border: 2px solid #49A24C;
+}
+
+.update:hover{
+	background: #6FEA74;
+}
+
+.cancel{
+	font-weight: 600;
+	background: #B33306;
+	border: 2px solid #B33306;
+}
+
+
+.cancel:hover{
+	background: #E67852;
 }

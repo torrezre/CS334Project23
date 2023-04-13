@@ -28,96 +28,186 @@
 				</table>
 			</div>
 			
-			<button class="btn mochi" onclick="window.location.href='management-flavors.html'">Add Edit or Remove Flavors</button>
+			 <br><br>
+			 <form id="login" class="flavored">
+	  <h2>Add Flavor</h2>
+		<div id="formAlign">
+			<label for="flavor">Flavor:</label>
+			<input type="text" id="flavor"><br>
+			<label for="Sale Price">Sale Price:</label>
+			<input type="text" id="salePrice" value="$"><br>
+			<label for="Image File">Image File:</label>
+			<input type="text" id="imageFile"><br>
+			<label for="Stock">Stock:</label>
+			<input type="number" id="stock"><br>
+			<label for="Category">Category:</label>
+			<select name="category" id="category">
+				<option value="1">Paletas</option>
+				<option value="2">Mochi</option>
+				<option value="3">Ice Cream Sandwiches</option>
+				<option value="4">Ice Cream Bars</option>
+				<option value="5">Gallons and Pints</option>
+			</select><br><br>
+		</div><br>
+		<button type="button" onclick="addFlavor()">Add Flavor</button></form>
 		</div>
 		<script>	
 		//Get login state from JSON
 		let loginState = JSON.parse(localStorage.getItem('login'));
-		
+
 		//Change page based on login state
 		if (loginState == "in"){
 		}
 		else {
 			document.getElementById('main').innerHTML = "<h2>Access Denied. Please Login <a href='management-login.html'>Here</a></h2>";
 		}	
-		
-		// Open the WebSQL database
-		var db = openDatabase('flashDB', '1.0', 'Flavor Database', 5 * 1024 * 1024);
+
+		// Open the WebSQL Creamery database
+		var db = openDatabase('mydb', '1.0', 'creamdb', 2 * 1024 * 1024);
 
 		// Function to initialize the database and create a table 
 		function initializeDB() {
-			db.transaction(function(tx) {
-				tx.executeSql('CREATE TABLE IF NOT EXISTS Flavors (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, sale_price TEXT, order_price TEXT, stock INTEGER, category TEXT)');
-		
-			});
+		  db.transaction(function(tx) {
+				tx.executeSql('CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, name, cat_ID, price, quantity, img)');	
+		  });
 		}
-		
+
 		// Function to populatee SQL product table with existing products
 		function populateData() {
 			db.transaction(function(tx) {
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Strawberry Paleta (9 Pack)", "$7.95", "$1.25", 15, "Paletas")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Pineapple Paleta (9 Pack)", "$7.95", "$1.25", 15, "Paletas")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Mango Paleta (9 Pack)", "$7.95", "$1.25", 15, "Paletas")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Lime Paleta (9 Pack)", "$7.95", "$1.25", 15, "Paletas")');
-			
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Green Tea Mochi (8 Pack)", "$5.29", "$0.75", 15, "Mochi")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Chocolate Mochi (8 Pack)", "$5.29", "$0.75", 15, "Mochi")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Mango Mochi (8 Pack)", "$5.29", "$0.75", 15, "Mochi")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Strawberry Mochi (8 Pack)", "$5.29", "$0.75", 15, "Mochi")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Vanilla Mochi (8 Pack)", "$5.29", "$0.75", 15, "Mochi")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Dulece de Leche Mochi (8 Pack)", "$5.29", "$0.75", 15, "Mochi")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("6 Variety Pack Mochi (48 Count)", "$29.95", "$3.50", 15, "Mochi")');
-			
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Vanilla Ice Cream Sandwiches (12 Pack, 3.5 oz each)", "$3.95", "$0.35", 15, "Ice Cream Sandwiches")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Chocolate Ice Cream Sandwiches (12 Pack, 3.5 oz each)", "$3.95", "$0.35", 15, "Ice Cream Sandwiches")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Double Chocolate Ice Cream Sandwiches (12 Pack, 3.5 oz each)", "$3.95", "$0.35", 15, "Ice Cream Sandwiches")');
-			
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Plain Ice Cream Bars (4 Pack, 3.5 oz each)", "$7.00", "$0.70", 15, "Ice Cream Bars")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Ice Cream Bars With Peanuts (4 Pack, 3.5 oz each)", "$7.00", "$0.70", 15, "Ice Cream Bars")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Caramel Ice Cream Bars (4 Pack, 3.5 oz each)", "$7.00", "$0.70", 15, "Ice Cream Bars")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Caramel Ice Cream Bars With Peanuts (4 Pack, 3.5 oz each)", "$7.00", "$0.70", 15, "Ice Cream Bars")');
-			
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Chocolate Ice Cream (1 Gallon)", "$7.75", "$2.75", 15, "Gallons and Pints")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Vanilla Ice Cream (1 Gallon)", "$7.75", "$2.75", 15, "Gallons and Pints")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Mint Chocolate Chip Ice Cream (1 Gallon)", "$7.75", "$2.75", 15, "Gallons and Pints")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Cookies and Cream Ice Cream (1 Gallon)", "$7.75", "$2.75", 15, "Gallons and Pints")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Mango Ice Cream (1 Gallon)", "$7.75", "$2.75", 15, "Gallons and Pints")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Pecan Pralines Ice Cream (1 Gallon)", "$7.75", "$2.75", 15, "Gallons and Pints")');
-			tx.executeSql('INSERT INTO Flavors(name, sale_price, order_price, stock, category) VALUES("Rocky Road Ice Cream (1 Gallon)", "$7.75", "$2.75", 15, "Gallons and Pints")');	
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [1, 'Strawberry Paleta (9 Pack)', 1, 7.95, 30, 'paletadefresca.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [2, 'Pineapple Paleta (9 Pack)', 1, 7.95, 30, 'Paletasdepineapple.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [3, 'Mango Paleta (9 Pack)', 1, 7.95, 30, 'Paletasdemango.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [4, 'Lime Paleta (9 Pack)', 1, 7.95, 30, 'Paletasdelime.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [5, 'Green Tea Mochi (8 Pack)', 2, 5.29, 20, 'mochi ice cream green tea.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [6, 'Chocolate Mochi (8 Pack)', 2, 5.29, 20, 'chocolate mochi ice cream.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [7, 'Mango Mochi (8 Pack)', 2, 5.29, 20, 'Mochi Ice Cream Mango.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [8, 'Strawberry Mochi (8 Pack)', 2, 5.29, 20, 'Mochi Ice Cream Strawberry.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [9, 'Vanilla Mochi (8 Pack)', 2, 5.29, 20, 'Mochi Ice Cream Vanilla.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [10, 'Dulce de Leche Mochi (8 Pack)', 2, 5.29, 20, 'mochi ice cream dulce de leche.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [11, '6 Variety Pack Mochi (48 Pack)', 2, 29.95, 20, 'box of mochi green tea.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [12, 'Vanilla Ice Cream Sandwich (12 Pack)', 3, 3.95, 20, 'ice cream sandwich.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [13, 'Chocolate Ice Cream Sandwich (12 Pack)', 3, 3.95, 20, 'chocolate ice cream sandwich.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [14, 'Double Chocolate Ice Cream Sandwich (12 Pack)', 3, 3.95, 20, 'dblchocolate ice cream sandwich.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [15, 'Chocolate Ice Cream Bar (4 Pack)', 4, 7.00, 20, 'chocolate ice cream bar.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [16, 'Chocolate with Peanuts Ice Cream Bar (4 Pack)', 4, 7.00, 20, 'chocolate ice cream bar nuts.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [17, 'Caramel Ice Cream Bar (4 Pack)', 4, 7.00, 20, 'caramel ice cream barplain.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [18, 'Caramel with Peanuts Ice Cream Bar (4 Pack)', 4, 7.00, 20, 'caramel ice cream bar.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [19, 'Chocolate (1 Gallon)', 5, 7.75, 30, 'chocolate ice cream scoop.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [20, 'Vanilla (1 Gallon)', 5, 7.75, 20, 'vanilla ice cream scoop.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [21, 'Mint Chocolate Chip (1 Gallon)', 5, 7.75, 20, 'mint chocolate chip ice cream scoop.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [22, 'Cookies and Cream (1 Gallon)', 5, 7.75, 20, 'cookies and cream ice cream scoop.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [23, 'Mango (1 Gallon)', 5, 7.75, 20, 'mango ice cream scoop.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [24, 'Pecan Pralines (1 Gallon)', 5, 7.75, 20, 'pecan pralines ice cream scoop.png']);
+			  tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [25, 'Rocky Road (1 Gallon)', 5, 7.75, 20, 'ice cream reeses cup scoop.png']);
 			});
-			
-			// Save JSON object to show that the product data been populated
-			let population = []
-			population.push("true")
-			localStorage.setItem('populated', JSON.stringify(population));
+			fetchProducts();
 		}
-		
-		// Function to fetch  products from the database  by category 
-		// Also adds edit and delete buttons for each product
-		function fetchProducts(category) {
-		
-		  document.getElementById("productimage").style.display = "inline-block";
-		  var productList = document.getElementById('productList');
-		  productList.innerHTML = '<tr>	<th>Product</th> <th>Sale Price</th> <th>Order Price</th> <th>Stock</th> <th>Category</th> <th>Action</th> </tr>';
+
+		// Function to add a new flavor to the database
+		function addFlavor() {
+		  var name = document.getElementById('flavor').value;
+		  var salePrice = document.getElementById('salePrice').value;
+		  var imageFile = document.getElementById('imageFile').value;
+		  var stock = document.getElementById('stock').value;
+		  var category = document.getElementById('category').value;
+
+		  if (name === '' || salePrice === '' || imageFile === '' || stock === '') {
+			alert('Please enter all product information.');
+			return;
+		  }
 
 		  db.transaction(function(tx) {
-			tx.executeSql('SELECT * FROM Flavors WHERE category = ?', [category], function(tx, result) {
+			tx.executeSql('INSERT INTO products (name, price, img, quantity, cat_ID) VALUES (?, ?, ?, ?, ?)', [name, salePrice, imageFile, stock, category], function() {
+			  alert('Flavor added successfully.');
+			  fetchProducts();
+			});
+		  });
+		}
+
+		// Function to fetch all products from the database ordered by category 
+		// Also adds edit and delete buttons for each product
+		function fetchProducts() {
+		  var productList = document.getElementById('productList');
+		  productList.innerHTML = '<tr>	<th colspan="2">Product</th> <th>Sale Price</th> <th>Stock</th> <th>Category</th> <th colspan=>Actions</th> </tr>';
+		  
+		  db.transaction(function(tx) {
+			tx.executeSql('SELECT * FROM products ORDER BY cat_ID DESC', [], function(tx, result) {
 			  var len = result.rows.length;
 			  for (var i = 0; i < len; i++) {
 				var row = result.rows.item(i);
 				var listItem = document.createElement('tr');
-				listItem.innerHTML = "<td>" + row.name + '</td><td>' + row.sale_price + '</td><td>' + row.order_price + '</td><td>' + row.stock + '</td><td>' + row.category + "</td><td>" +
+				listItem.innerHTML = '<td><img id="producticon" src="images/' + row.img + '"/></td><td>' + row.name + '</td><td>' + row.price + '</td><td>' + row.quantity + '</td><td>' + row.cat_ID + "</td><td>" +
+				  '<button onclick="editProduct(' + row.id + ')" class="update">Edit</button>' +
+				  '<button onclick="deleteProduct(' + row.id + ')" class="cancel">Delete</button></td>' +
 				  '<button onclick="">Order Now</button></td>';
 				productList.appendChild(listItem);
 			  }
 			});
 		  });
 		}
-		
+
+		// Function to fetch  products from the database  by category 
+		// Also adds edit and delete buttons for each product
+		function fetchProductCategory(category) {
+			document.getElementById("productimage").style.display = "inline-block";
+			var productList = document.getElementById('productList');
+			productList.innerHTML = '<tr>	<th colspan="2">Product</th> <th>Sale Price</th> <th>Stock</th> <th>Category</th> <th colspan=>Actions</th> </tr>';
+
+			db.transaction(function(tx) {
+				tx.executeSql('SELECT * FROM products WHERE cat_ID = ?', [category], function(tx, result) {
+				var len = result.rows.length;
+				for (var i = 0; i < len; i++) {
+					var row = result.rows.item(i);
+					var listItem = document.createElement('tr');
+					listItem.innerHTML = '<td><img id="producticon" src="images/' + row.img + '"/></td><td>' + row.name + '</td><td>' + row.price + '</td><td>' + row.quantity + '</td><td>' + row.cat_ID + "</td><td>" +
+										 '<button onclick="editProduct(' + row.id + ')" class="update">Edit</button>' +
+										 '<button onclick="deleteProduct(' + row.id + ')" class="cancel">Delete</button>' +
+										 '<button onclick="">Order Now</button></td>';
+					productList.appendChild(listItem);
+				}
+			});
+		});
+
+		// Function to edit a product in the database
+		function editProduct(id) {
+		  var name = prompt('Enter updated product name:');
+		  var salePrice = prompt('Enter updated sale price:');
+		  var imageFile = prompt('Enter updated image file name:');
+		  var stock = prompt('Enter updated stock quantity:');
+
+		  if (name === '' || salePrice === '' || imageFile === '' || stock === '' ||
+			  name === null || salePrice === null || imageFile === null || stock === null) {
+			alert('Please enter all product information and try again.');
+			return;
+		  }
+
+		  db.transaction(function(tx) {
+			tx.executeSql('UPDATE products SET name = ?, price = ?, img = ?, quantity = ? WHERE id = ?', [name, salePrice, imageFile, stock, id], function() {
+			  alert('Product updated successfully.');
+			  fetchProducts();
+			});
+		  });
+		}
+
+		// Function to delete a product from the database
+		function deleteProduct(id) {
+		  var confirmDelete = confirm('Are you sure you want to delete this product?');
+		  if (confirmDelete) {
+			db.transaction(function(tx) {
+			  tx.executeSql('DELETE FROM products WHERE id = ?', [id], function() {
+				alert('Product deleted successfully.');
+				fetchProducts();
+			  });
+			});
+		  }
+		}
+
+		}
 		// Function to check if SQL table is empty and populate with default data if it is.
 		function fillIfEmpty() {
 			db.transaction(function(tx) {
-				tx.executeSql('SELECT * FROM Flavors', [], function(tx, result) {
+				tx.executeSql('SELECT * FROM products', [], function(tx, result) {
 					var len = result.rows.length;
 					if (len == 0){
 						console.log("Orders SQL Table is empty. Populating SQL Data.");
@@ -133,33 +223,33 @@
 					console.error("Error executing SQL query: " + error.message);
 			});
 		}
-		
+
 		function showPaletas() {
 			document.getElementById("productimage").src = "images/paletas.jpg";
-			fetchProducts("Paletas");
+			fetchProductCategory(1);
 		}
 			
 		function showMochi() {
 			document.getElementById("productimage").src = "images/mochi.png";
-			fetchProducts("Mochi");
+			fetchProductCategory(2);
 		}
 			
 			
 		function showSandwiches() {
 			document.getElementById("productimage").src = "images/sandwiches.jpg";
-			fetchProducts("Ice Cream Sandwiches");
+			fetchProductCategory(3);
 		}
 			
 			
 		function showBars() {
 			document.getElementById("productimage").src = "images/bars.jpg";
-			fetchProducts("Ice Cream Bars");
+			fetchProductCategory(4);
 		}
 			
 			
 		function showGallons() {
 			document.getElementById("productimage").src = "images/gallons.png";
-			fetchProducts("Gallons and Pints");
+			fetchProductCategory(5);
 		}
 		
 		// Initialize the database and fill products when the page loads
