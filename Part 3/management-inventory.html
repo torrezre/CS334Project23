@@ -72,6 +72,8 @@
 				tx.executeSql('CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, name, cat_ID, price, quantity, img)');	
 		  });
 		}
+		
+		var selectedCategory = 0;
 
 		// Function to populatee SQL product table with existing products
 		function populateData() {
@@ -110,7 +112,7 @@
 		  var salePrice = document.getElementById('salePrice').value;
 		  var imageFile = document.getElementById('imageFile').value;
 		  var stock = document.getElementById('stock').value;
-		  var category = document.getElementById('category').value;
+		  var category = parseInt(document.getElementById('category').value);
 
 		  if (name === '' || salePrice === '' || imageFile === '' || stock === '') {
 			alert('Please enter all product information.');
@@ -118,9 +120,14 @@
 		  }
 
 		  db.transaction(function(tx) {
-			tx.executeSql('INSERT INTO products (name, price, img, quantity, cat_ID) VALUES (?, ?, ?, ?, ?)', [name, salePrice, imageFile, stock, category], function() {
+			tx.executeSql('INSERT INTO products (name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?)', [name, category, salePrice, stock, imageFile], function() {
 			  alert('Flavor added successfully.');
-			  fetchProducts();
+			  if (selectedCategory == 0){
+				fetchProducts();
+			  }
+			  else {
+				fetchProductCategory(selectedCategory);
+			  }
 			});
 		  });
 		}
@@ -128,6 +135,7 @@
 		// Function to fetch all products from the database ordered by category 
 		// Also adds edit and delete buttons for each product
 		function fetchProducts() {
+		  selectedCategory = 0;
 		  document.getElementById("productimage").style.display = "none";
 		  document.getElementById("category").value = 1;
 		  var productList = document.getElementById('productList');
@@ -152,6 +160,7 @@
 		// Function to fetch  products from the database  by category 
 		// Also adds edit and delete buttons for each product
 		function fetchProductCategory(category) {
+			selectedCategory = category;
 			document.getElementById("productimage").style.display = "inline-block";
 			var productList = document.getElementById('productList');
 			productList.innerHTML = '<tr>	<th colspan="2">Product</th> <th>Sale Price</th> <th>Stock</th> <th>Category</th> <th colspan=>Actions</th> </tr>';
@@ -200,7 +209,12 @@
 			db.transaction(function(tx) {
 			  tx.executeSql('DELETE FROM products WHERE id = ?', [id], function() {
 				alert('Product deleted successfully.');
-				fetchProducts();
+				  if (selectedCategory == 0){
+					fetchProducts();
+				  }
+				  else {
+					fetchProductCategory(selectedCategory);
+				  }
 			  });
 			});
 		  }
