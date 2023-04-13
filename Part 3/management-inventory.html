@@ -212,12 +212,12 @@
 				tx.executeSql('SELECT * FROM products', [], function(tx, result) {
 					var len = result.rows.length;
 					if (len == 0){
-						console.log("Orders SQL Table is empty. Populating SQL Data.");
+						console.log("Product SQL Table is empty. Populating SQL Data.");
 						populateData();
 						return true;
 					}
 					else {
-						console.log("Orders SQL Table is not empty.");
+						console.log("Product SQL Table is not empty.");
 						return false;
 					}
 					})
