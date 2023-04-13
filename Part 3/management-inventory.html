@@ -197,7 +197,12 @@
 		  db.transaction(function(tx) {
 			tx.executeSql('UPDATE products SET name = ?, price = ?, img = ?, quantity = ? WHERE id = ?', [name, salePrice, imageFile, stock, id], function() {
 			  alert('Product updated successfully.');
-			  fetchProducts();
+			  if (selectedCategory == 0){
+				fetchProducts();
+			  }
+			  else {
+				fetchProductCategory(selectedCategory);
+			  }
 			});
 		  });
 		}
