@@ -42,6 +42,8 @@
 		tx.executeSql('INSERT INTO WebOrders(name, products, order_total, address) VALUES("Bob Jones", "Strawberry Paleta (9 Pack)<br>6 Variety Pack Mochi (48 Count)", "$37.90", "12312 Gitoffadis Rd SE<br>Albuquerque, NM, 87123")');
 		tx.executeSql('INSERT INTO WebOrders(name, products, order_total, address) VALUES("Skip Chadwell", "Rocky Road Ice Cream (1 Gallon)", "$7.75", "1111 This Aint A Real Rd<br>Albuquerque, NM, 87123" )');
       });
+	  
+	  location.reload();
 	}
 	
 	// Function to fetch all orders from the database ordered by customer name 
