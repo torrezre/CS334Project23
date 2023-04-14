@@ -66,6 +66,8 @@
   box-sizing: border-box;
 } 
 
+/*overriding user agent stylesheet from browser*/
+
 body {
   margin: 0;
   height: 100%;
@@ -202,8 +204,13 @@ body {
   max-width: 40%;
 }
 
+#cart, #cartTop, #cartBottom{
+  flex: 0 0 100%;
+  padding-left:33% !important;
+}
+
 /*button for add to cart / log in */
-.add-to-cart {
+.add-to-cart, button {
 	box-shadow:inset 0px 1px 0px 0px #fce2c1;
 	background-color: #ee903b;
 	border-radius:6px;
@@ -215,29 +222,16 @@ body {
 	text-decoration:none;
 	text-shadow:0px 1px 0px #cc9f52;
 }
-.add-to-cart:hover, .button:hover {
+.add-to-cart:hover, button:hover {
 	background-color:#f0bbbb;
 }
-.add-to-cart:active, .button:active {
+.add-to-cart:active, button:active {
 	position:relative;
 	top:1px;
 }
 
-
-.show-cart li {
-  display: flex;
-}
-.card {
-  margin-bottom: 20px;
-}
-.card-img-top {
-  width: 200px;
-  height: 200px;
-  align-self: center;
-}
-
 /* Making everything scrunch together for mobile / small screens */
-@media all and (max-width: 600px) {
+@media all and (max-width: 500px) {
   /*Header*/
   h1{
     margin-top:0;

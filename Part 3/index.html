@@ -12,29 +12,7 @@ header();
 </script>
       <div id="wrapper"></div>
       <script type="text/javascript">
-        db.transaction(function(tx) {
-          tx.executeSql('SELECT * FROM cat', [], function(tx, results) {
-
-            var len = results.rows.length;
-            for (var i = 0; i < results.rows.length; i++) {
-              var row = results.rows.item(i);
-
-              // creates "menu" class div
-              var div = document.createElement('div');
-              div.className = 'menu';
-
-              //using innerHTML to fill divs
-              div.innerHTML = '<a href="./'+ row.name +'.html' +'">'+'<h3>' + row.name + '</h3>' + '<img src="./images/' + row.img +'">' + '</a>';
-
-              //adding div
-              document.getElementById('wrapper').appendChild(div);
-
-            }
-
-          });
-
-        });
-      
+      makeIndex();
       </script>
     <script type="text/javascript">
 footer();

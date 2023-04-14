@@ -53,10 +53,37 @@ db.transaction(function(tx) {
   tx.executeSql('INSERT INTO products (id, name, cat_ID, price, quantity, img) VALUES (?, ?, ?, ?, ?, ?)', [25, 'Rocky Road (1 Gallon)', 5, 7.75, 20, 'ice cream reeses cup scoop.png']);
 });
 
-//making cart table
-db.transaction(function(tx) {
-  tx.executeSql('CREATE TABLE IF NOT EXISTS cart (id INTEGER PRIMARY KEY AUTOINCREMENT, name, price, quantity)');
+//web order db
+  db.transaction(function(tx) {
+    tx.executeSql('CREATE TABLE IF NOT EXISTS WebOrders (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, products TEXT, order_total TEXT, address TEXT)');
 });
+
+//function for building index.html menu
+function makeIndex(){
+  db.transaction(function(tx) {
+    tx.executeSql('SELECT * FROM cat', [], function(tx, results) {
+
+      var len = results.rows.length;
+      for (var i = 0; i < results.rows.length; i++) {
+        var row = results.rows.item(i);
+
+        // creates "menu" class div
+        var div = document.createElement('div');
+        div.className = 'menu';
+
+        //using innerHTML to fill divs
+        div.innerHTML = '<a href="./'+ row.name +'.html' +'">'+'<h3>' + row.name + '</h3>' + '<img src="./images/' + row.img +'">' + '</a>';
+
+        //adding div
+        document.getElementById('wrapper').appendChild(div);
+
+      }
+
+    });
+
+  });
+
+}
 
 //function for building product pages
 function makeProducts(a){
@@ -105,6 +132,11 @@ function makeProducts(a){
   });
 }
 
+//making cart table
+db.transaction(function(tx) {
+  tx.executeSql('CREATE TABLE IF NOT EXISTS cart (id INTEGER PRIMARY KEY AUTOINCREMENT, name, price, quantity)');
+});
+
 //Adding things to the cart.
 function addToCart(name,price) {
   const quantity = 1;
@@ -135,49 +167,303 @@ function addToCart(name,price) {
   });
 }
 
-}
-
 //Building cart page
 function makeCart(){
-    // Retrieve cart data and populate the HTML table
-    db.transaction(function(tx) {
-      tx.executeSql('SELECT * FROM cart', [], function(tx, results) {
-        var table = document.createElement('table');
-        var thead = table.createTHead();
-        var row = thead.insertRow();
-        var th1 = document.createElement('th');
-        var th2 = document.createElement('th');
-        var th3 = document.createElement('th');
-        var th4 = document.createElement('th');
+  // Retrieve cart data and populate the HTML table
+  db.transaction(function(tx) {
+    tx.executeSql('SELECT * FROM cart', [], function(tx, results) {
+      var table = document.createElement('table');
+      var thead = table.createTHead();
+      var row = thead.insertRow();
+      var th1 = document.createElement('th');
+      var th2 = document.createElement('th');
+      var th3 = document.createElement('th');
+      var th4 = document.createElement('th');
 
-        th1.innerHTML = '<h3>Product Name</h3>';
-        th2.innerHTML = '<h3>Price</h3>';
-        th3.innerHTML = '<h3>Quantity</h3>';
-        th4.innerHTML = '<h3>Delete</h3>';
-        row.appendChild(th1);
-        row.appendChild(th2);
-        row.appendChild(th3);
-        row.appendChild(th4);
-        var tbody = table.createTBody();
-        var total = 0; // initialize total to zero
-        for (var i = 0; i < results.rows.length; i++) {
-          var row = tbody.insertRow();
-          var cell1 = row.insertCell();
-          var cell2 = row.insertCell();
-          var cell3 = row.insertCell();
-          cell1.innerHTML = results.rows.item(i).name;
-          cell2.innerHTML = '$' + results.rows.item(i).price;
-          cell3.innerHTML = results.rows.item(i).quantity;
-          total += parseFloat(results.rows.item(i).price) * parseFloat(results.rows.item(i).quantity);
-        }
-        var totalRow = table.insertRow();
-        var totalLabelCell = totalRow.insertCell();
-        var totalValueCell = totalRow.insertCell();
-        totalLabelCell.innerHTML = "<h3>Total:</h3>";
-        totalValueCell.innerHTML = "$" + total.toFixed(2);
-        document.getElementById('wrapper').appendChild(table);
-      });
+      th1.innerHTML = '<h3>Product Name</h3>';
+      th2.innerHTML = '<h3>Price</h3>';
+      th3.innerHTML = '<h3>Quantity</h3>';
+      th4.innerHTML = '<h3>Delete</h3>';
+      row.appendChild(th1);
+      row.appendChild(th2);
+      row.appendChild(th3);
+      row.appendChild(th4);
+      var tbody = table.createTBody();
+      var total = 0; // initialize total to zero
+      for (var i = 0; i < results.rows.length; i++) {
+        var row = tbody.insertRow();
+        var cell1 = row.insertCell();
+        var cell2 = row.insertCell();
+        var cell3 = row.insertCell();
+        var cell4 = row.insertCell();
+        cell1.innerHTML = results.rows.item(i).name;
+        cell2.innerHTML = '$' + results.rows.item(i).price;
+        cell3.innerHTML = results.rows.item(i).quantity;
+        var deleteButton = document.createElement('button');
+        deleteButton.innerHTML = 'X';
+        deleteButton.onclick = (function(id) {
+         return function() {deleteCartItem(id);};
+        })(results.rows.item(i).id);
+        cell4.appendChild(deleteButton);
+        total += parseFloat(results.rows.item(i).price) * parseFloat(results.rows.item(i).quantity);
+      }
+      var totalRow = table.insertRow();
+      var totalLabelCell = totalRow.insertCell();
+      var totalValueCell = totalRow.insertCell();
+      totalLabelCell.innerHTML = "<h3>Total:</h3>";
+      totalValueCell.innerHTML = "$" + total.toFixed(2);
+      document.getElementById('cart').innerHTML = ''; // clear existing table
+      document.getElementById('cart').appendChild(table);
     });
+  });
+}
+
+//delete one item from cart
+function deleteCartItem(id) {
+  db.transaction(function(tx) {
+    tx.executeSql('DELETE FROM cart WHERE id = ?', [id], function(tx, result) {
+      console.log('Item deleted from cart.');
+      alert("Item deleted from cart!");
+        // check if cart has any remaining items
+    tx.executeSql('SELECT * FROM cart', [], function(tx, result) {
+      var rows = result.rows;
+      if (rows.length == 0) {
+      // if no more items in cart, reload page to reflect changes
+      window.location.reload();
+      //this reloads the checkout div as well, so there's no loophole where someone can make an order with empty items.
+    } else {
+      makeCart(); // redraw cart table
+    }
+  });  
+ }, function(tx, error) {
+  console.log('Error deleting item from cart: ' + error.message);
+ });
+ });
+}
+
+//Delete all items from cart
+function deleteCartAll() {
+  db.transaction(function(tx) {
+    tx.executeSql('DELETE FROM cart', [], function(tx, result) {
+      console.log('All items deleted from cart.');
+      alert("All items deleted from cart!");
+      // Reload the cart page to reflect the changes
+      window.location.reload();
+    }, function(tx, error) {
+      console.log('Error deleting items from cart: ' + error.message);
+    });
+  });
+}
+
+
+//Building checkout form
+var checkoutClicked = false; //I only want this div built once, on the first click not make infinite divs.
+
+//Making the div
+function makeCheckout() {
+  if (!checkoutClicked) {
+    //check if the cart table has any rows
+    db.transaction(function (tx) {
+      tx.executeSql('SELECT * FROM cart', [], function (tx, result) {
+        var rows = result.rows;
+        if (rows.length > 0) {
+          //cart has rows, build the checkout form
+          var div = document.createElement("div");
+          div.setAttribute("id", "cartBottom");
+          var form = document.createElement("form");
+          var nameLabel = document.createElement("label");
+          nameLabel.innerHTML = "Name:";
+          var nameInput = document.createElement("input");
+          nameInput.setAttribute("type", "text");
+          nameInput.setAttribute("name", "name");
+
+          var mailingAddressLabel = document.createElement("label");
+          mailingAddressLabel.innerHTML = "Mailing Address:";
+          var mailingAddressInput = document.createElement("input");
+          mailingAddressInput.setAttribute("type", "text");
+          mailingAddressInput.setAttribute("name", "mailingAddress");
+
+          var cityLabel = document.createElement("label");
+          cityLabel.innerHTML = "City:";
+          var cityInput = document.createElement("input");
+          cityInput.setAttribute("type", "text");
+          cityInput.setAttribute("name", "city");
+
+          var stateLabel = document.createElement("label");
+          stateLabel.innerHTML = "State:";
+
+          // create select element
+          var select = document.createElement("select");
+          select.setAttribute("name", "state");
+
+          // create options and append to select element
+          var states = [  ["AL", "Alabama"],
+          ["AK", "Alaska"],
+          ["AZ", "Arizona"],
+          ["AR", "Arkansas"],
+          ["CA", "California"],
+          ["CO", "Colorado"],
+          ["CT", "Connecticut"],
+          ["DE", "Delaware"],
+          ["FL", "Florida"],
+          ["GA", "Georgia"],
+          ["HI", "Hawaii"],
+          ["ID", "Idaho"],
+          ["IL", "Illinois"],
+          ["IN", "Indiana"],
+          ["IA", "Iowa"],
+          ["KS", "Kansas"],
+          ["KY", "Kentucky"],
+          ["LA", "Louisiana"],
+          ["ME", "Maine"],
+          ["MD", "Maryland"],
+          ["MA", "Massachusetts"],
+          ["MI", "Michigan"],
+          ["MN", "Minnesota"],
+          ["MS", "Mississippi"],
+          ["MO", "Missouri"],
+          ["MT", "Montana"],
+          ["NE", "Nebraska"],
+          ["NV", "Nevada"],
+          ["NH", "New Hampshire"],
+          ["NJ", "New Jersey"],
+          ["NM", "New Mexico"],
+          ["NY", "New York"],
+          ["NC", "North Carolina"],
+          ["ND", "North Dakota"],
+          ["OH", "Ohio"],
+          ["OK", "Oklahoma"],
+          ["OR", "Oregon"],
+          ["PA", "Pennsylvania"],
+          ["RI", "Rhode Island"],
+          ["SC", "South Carolina"],
+          ["SD", "South Dakota"],
+          ["TN", "Tennessee"],
+          ["TX", "Texas"],
+          ["UT", "Utah"],
+          ["VT", "Vermont"],
+          ["VA", "Virginia"],
+          ["WA", "Washington"],
+          ["WV", "West Virginia"],
+          ["WI", "Wisconsin"],
+          ["WY", "Wyoming"]
+        ];
+
+        for (var i = 0; i < states.length; i++) {
+          var option = document.createElement("option");
+          option.setAttribute("value", states[i][0]);
+          option.appendChild(document.createTextNode(states[i][1]));
+          select.appendChild(option);
+        }
+
+          var zipLabel = document.createElement("label");
+          zipLabel.innerHTML = "Zip:";
+          var zipInput = document.createElement("input");
+          zipInput.setAttribute("type", "text");
+          zipInput.setAttribute("name", "zip");
+          zipInput.setAttribute("maxlength", "5");
+          //making sure only numbers are entered into zip
+          zipInput.addEventListener("input", function() {
+            this.value = this.value.replace(/\D/g,'');
+          });
+
+          // add form elements to the div
+          form.appendChild(nameLabel);
+          form.appendChild(nameInput);
+          form.appendChild(document.createElement("br"));
+          form.appendChild(mailingAddressLabel);
+          form.appendChild(mailingAddressInput);
+          form.appendChild(document.createElement("br"));
+          form.appendChild(cityLabel);
+          form.appendChild(cityInput);
+          form.appendChild(document.createElement("br"));
+          form.appendChild(stateLabel);
+          form.appendChild(select);
+          form.appendChild(document.createElement("br"));
+          form.appendChild(zipLabel);
+          form.appendChild(zipInput);
+          div.appendChild(form);
+
+      // add "order" button to the page
+      var orderButton = document.createElement("button");
+      orderButton.innerHTML = "Order";
+      orderButton.addEventListener("click", function() {makeOrder()});
+      div.appendChild(orderButton);
+
+      // add div to the page
+      document.getElementById("wrapper").appendChild(div);
+
+      //set flag to true to prevent subsequent clicks
+      checkoutClicked = true;
+    } else {
+      // cart has no rows, do nothing
+      alert("Please add items to your cart to check out.");
+    }
+  });
+ });
+ }
+ }
+
+ //Sending order information to the table
+ function makeOrder() {
+  db.transaction(function(tx) {
+    tx.executeSql('SELECT * FROM cart', [], function(tx, result) {
+      var rows = result.rows;
+      if (rows.length > 0) {
+        var name = document.getElementsByName("name")[0].value;
+        var mailingAddress = document.getElementsByName("mailingAddress")[0].value;
+        var city = document.getElementsByName("city")[0].value;
+        var state = document.getElementsByName("state")[0].value;
+        var zip = document.getElementsByName("zip")[0].value;
+        
+        // Concatenate mailing address, city, state, and zip into one string
+        var address = mailingAddress + "<br>" + city + ", " + state + " " + zip;
+        
+        var products = "";
+        var orderTotal = 0;
+        for (var i = 0; i < rows.length; i++) {
+          var row = rows.item(i);
+          var productName = row.name;
+          var price = row.price;
+          var quantity = row.quantity;
+          
+          // Add product to the list of products
+          if(quantity > 1){
+            products += quantity + " " + productName + "<br>";
+          }else{
+            products += productName + "<br>";
+          }
+          
+          
+          // Update order total
+          orderTotal += price * quantity;
+        }
+        var orderTotalToString ="$" + orderTotal.toFixed(2);
+        
+        // Insert order into WebOrders table
+        tx.executeSql('INSERT INTO WebOrders (name, products, order_total, address) VALUES (?, ?, ?, ?)',
+          [name, products, orderTotalToString, address],
+          function(tx, result) {
+          console.log("Order successfully inserted into WebOrders table");
+          // Clear cart table after purchase
+          tx.executeSql('DELETE FROM cart', [], function(tx, result) {
+            console.log("Cart table successfully cleared");
+            alert("Order Submitted!")
+            window.location.reload();
+            }, function(tx, error) {
+              console.log("Error clearing cart table: " + error.message);
+            });
+          },
+          function(tx, error) {
+            console.log("Error inserting order into WebOrders table: " + error.message);
+          });
+      } else {
+        console.log("Cart is empty");//just in case
+      }
+    }, function(tx, error) {
+      console.log("Error selecting from cart table: " + error.message);
+    });
+  });
 }
 
 //building header
@@ -224,32 +510,23 @@ li4.appendChild(h1_3);
 const li5 = document.createElement("li");
 const h1_4 = document.createElement("h1");
 const a5 = document.createElement("a");
-a5.setAttribute("href", "./login.html");
-a5.textContent = "Log In";
+a5.setAttribute("href", "./cart.html");
+a5.textContent = "Cart";
 h1_4.appendChild(a5);
 li5.appendChild(h1_4);
-
-const li6 = document.createElement("li");
-const h1_5 = document.createElement("h1");
-const a6 = document.createElement("a");
-a6.setAttribute("href", "./cart.html");
-a6.textContent = "Cart";
-h1_5.appendChild(a6);
-li6.appendChild(h1_5);
 
 ul.appendChild(li1);
 ul.appendChild(li2);
 ul.appendChild(li3);
 ul.appendChild(li4);
 ul.appendChild(li5);
-ul.appendChild(li6);
 
 nav.appendChild(ul);
 header.appendChild(nav);
 
 // Add the header
 document.body.appendChild(header);
-}
+ }
 
 //building footer
 function footer(){
@@ -265,4 +542,5 @@ span.appendChild(a);
 h4.appendChild(span);
 footer.appendChild(h4);
 document.body.appendChild(footer);
+ }
 }

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Creamery - Home</title>
+    <title>Creamery - Cart</title>
     <link rel="shortcut icon" type="image/x-icon" href="./images/creamery.png" />
     <link rel="stylesheet" href="./style.css">
     <script type="text/javascript" src="./js/creamery.js"></script>
@@ -11,12 +11,16 @@
 header();
 </script>
     <div id="wrapper">
-
+      <div id="cartTop">
+      <h3>Cart</h3><button onclick="makeCheckout()"> Checkout </button><button onclick="deleteCartAll()"> Clear Cart </button>
+      </div>
+      <div id="cart">
       <p>
       <table>
 
       </table>
       </p>
+    </div>
     </div>
 <script type="text/javascript">
 makeCart();
