@@ -140,7 +140,7 @@ db.transaction(function(tx) {
 function addToCart(name,price) {
   const quantity = 1;
 
-  // check if the product already exists in the cart, updating quantity if so. 
+  //check if the product already exists in the cart, updating quantity if so. 
   db.transaction(function(tx) {
     tx.executeSql('SELECT * FROM cart WHERE name = ?', [name], function(tx, result) {
       if (result.rows.length > 0) {
@@ -275,7 +275,6 @@ function deleteCartAll() {
     });
   });
 }
-
 
 //Building checkout form
 var checkoutClicked = false; //I only want this div built once, on the first click not make infinite divs.
@@ -436,10 +435,16 @@ function makeCheckout() {
         var city = document.getElementsByName("city")[0].value;
         var state = document.getElementsByName("state")[0].value;
         var zip = document.getElementsByName("zip")[0].value;
-        
-        // Concatenate mailing address, city, state, and zip into one string
+  
+        // Check if any of the required fields is empty
+        if (!name || !mailingAddress || !city || !zip) {
+          alert("Please fill out all required fields.");
+          return;
+        }
+  
+        // Concatenate mailing address, city, state, and zip into one string for table
         var address = mailingAddress + "<br>" + city + ", " + state + " " + zip;
-        
+  
         var products = "";
         var orderTotal = 0;
         for (var i = 0; i < rows.length; i++) {
@@ -447,20 +452,20 @@ function makeCheckout() {
           var productName = row.name;
           var price = row.price;
           var quantity = row.quantity;
-          
+  
           // Add product to the list of products
           if(quantity > 1){
             products += quantity + " " + productName + "<br>";
           }else{
             products += productName + "<br>";
           }
-          
-          
+  
+  
           // Update order total
           orderTotal += price * quantity;
         }
         var orderTotalToString ="$" + orderTotal.toFixed(2);
-        
+  
         // Insert order into WebOrders table
         tx.executeSql('INSERT INTO WebOrders (name, products, order_total, address) VALUES (?, ?, ?, ?)',
           [name, products, orderTotalToString, address],
