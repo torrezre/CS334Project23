@@ -5,29 +5,27 @@
     <link rel="shortcut icon" type="image/x-icon" href="./images/creamery.png" />
     <link rel="stylesheet" href="./style.css">
     <script type="text/javascript" src="./js/creamery.js"></script>
+    <script type="text/javascript">
+      window.onload = function() {
+        header();
+        footer();
+        makeCart();
+    }
+    </script>
   </head>
   <body>
-    <script type="text/javascript">
-header();
-</script>
+    <header></header>
     <div id="wrapper">
       <div id="cartTop">
-        <h2>Cart</h2>
-      <button onclick="makeCheckout()"> Checkout </button><button onclick="deleteCartAll()"> Clear Cart </button>
+      <h2>Cart</h2>
       </div>
       <div id="cart">
       <p>
       <table>
-
       </table>
       </p>
     </div>
     </div>
-<script type="text/javascript">
-makeCart();
-</script>
-    <script type="text/javascript">
-footer();
-</script>
-  </body>
+<footer></footer>
+</body>
 </html>

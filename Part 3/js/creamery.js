@@ -171,48 +171,70 @@ function makeCart(){
   // Retrieve cart data and populate the HTML table
   db.transaction(function(tx) {
     tx.executeSql('SELECT * FROM cart', [], function(tx, results) {
-      var table = document.createElement('table');
-      var thead = table.createTHead();
-      var row = thead.insertRow();
-      var th1 = document.createElement('th');
-      var th2 = document.createElement('th');
-      var th3 = document.createElement('th');
-      var th4 = document.createElement('th');
+      if (results.rows.length > 0) {
+        var table = document.createElement('table');
+        var thead = table.createTHead();
+        var row = thead.insertRow();
+        var th1 = document.createElement('th');
+        var th2 = document.createElement('th');
+        var th3 = document.createElement('th');
+        var th4 = document.createElement('th');
 
-      th1.innerHTML = '<h3>Product</h3>';
-      th2.innerHTML = '<h3>Price</h3>';
-      th3.innerHTML = '<h3>Quantity</h3>';
-      th4.innerHTML = '<h3>Delete</h3>';
-      row.appendChild(th1);
-      row.appendChild(th2);
-      row.appendChild(th3);
-      row.appendChild(th4);
-      var tbody = table.createTBody();
-      var total = 0; // initialize total to zero
-      for (var i = 0; i < results.rows.length; i++) {
-        var row = tbody.insertRow();
-        var cell1 = row.insertCell();
-        var cell2 = row.insertCell();
-        var cell3 = row.insertCell();
-        var cell4 = row.insertCell();
-        cell1.innerHTML = results.rows.item(i).name;
-        cell2.innerHTML = '$' + results.rows.item(i).price;
-        cell3.innerHTML = results.rows.item(i).quantity;
-        var deleteButton = document.createElement('button');
-        deleteButton.innerHTML = 'X';
-        deleteButton.onclick = (function(id) {
-         return function() {deleteCartItem(id);};
-        })(results.rows.item(i).id);
-        cell4.appendChild(deleteButton);
-        total += parseFloat(results.rows.item(i).price) * parseFloat(results.rows.item(i).quantity);
+        th1.innerHTML = '<h3>Product</h3>';
+        th2.innerHTML = '<h3>Price</h3>';
+        th3.innerHTML = '<h3>Quantity</h3>';
+        th4.innerHTML = '<h3>Delete</h3>';
+        row.appendChild(th1);
+        row.appendChild(th2);
+        row.appendChild(th3);
+        row.appendChild(th4);
+        var tbody = table.createTBody();
+        var total = 0; // initialize total to zero
+        for (var i = 0; i < results.rows.length; i++) {
+          var row = tbody.insertRow();
+          var cell1 = row.insertCell();
+          var cell2 = row.insertCell();
+          var cell3 = row.insertCell();
+          var cell4 = row.insertCell();
+          cell1.innerHTML = results.rows.item(i).name;
+          cell2.innerHTML = '$' + results.rows.item(i).price;
+          cell3.innerHTML = results.rows.item(i).quantity;
+          var deleteButton = document.createElement('button');
+          deleteButton.innerHTML = 'X';
+          deleteButton.onclick = (function(id) {
+           return function() {deleteCartItem(id);};
+          })(results.rows.item(i).id);
+          cell4.appendChild(deleteButton);
+          total += parseFloat(results.rows.item(i).price) * parseFloat(results.rows.item(i).quantity);
+        }
+        var totalRow = table.insertRow();
+        var totalLabelCell = totalRow.insertCell();
+        var totalValueCell = totalRow.insertCell();
+        totalLabelCell.innerHTML = "<h3>Total:</h3>";
+        totalValueCell.innerHTML = "$" + total.toFixed(2);
+        document.getElementById('cart').innerHTML = ''; // clear existing table
+        document.getElementById('cart').appendChild(table);
+
+        //making the button for checking out
+        var checkoutButton = document.createElement('button');
+        checkoutButton.innerHTML = 'Checkout';
+        checkoutButton.onclick = makeCheckout;
+        
+        //making the button for clearing the cart
+        var clearCartButton = document.createElement('button');
+        clearCartButton.innerHTML = 'Clear Cart';
+        clearCartButton.onclick = deleteCartAll;
+
+        //adding buttons to cartTop
+        var cartTop = document.getElementById('cartTop');
+        cartTop.appendChild(checkoutButton);
+        cartTop.appendChild(clearCartButton);
+        //now the buttons won't exist if there's nothing in the cart table.
+
+      } else {
+        // If there are no rows in the cart
+        document.getElementById('cart').innerHTML = 'Cart is empty!';
       }
-      var totalRow = table.insertRow();
-      var totalLabelCell = totalRow.insertCell();
-      var totalValueCell = totalRow.insertCell();
-      totalLabelCell.innerHTML = "<h3>Total:</h3>";
-      totalValueCell.innerHTML = "$" + total.toFixed(2);
-      document.getElementById('cart').innerHTML = ''; // clear existing table
-      document.getElementById('cart').appendChild(table);
     });
   });
 }
@@ -467,79 +489,97 @@ function makeCheckout() {
 
 //building header
 function header(){
-  //just have one file that does all this instead of repeating this element each time
-const header = document.createElement("header");
-const nav = document.createElement("div");
-nav.setAttribute("class", "nav");
-const ul = document.createElement("ul");
-ul.setAttribute("class", "row");
+// Create the div element
+const div = document.createElement('div');
+div.classList.add('nav');
 
-const li1 = document.createElement("li");
-const a1 = document.createElement("a");
-a1.setAttribute("href", "./index.html");
-const img = document.createElement("img");
-img.setAttribute("src", "./images/creamery.png");
+// Create the ul element
+const ul = document.createElement('ul');
+ul.classList.add('row');
+
+// Create the list items
+const li1 = document.createElement('li');
+const li2 = document.createElement('li');
+const li3 = document.createElement('li');
+const li4 = document.createElement('li');
+const li5 = document.createElement('li');
+
+// Create the anchor elements and their children
+const a1 = document.createElement('a');
+a1.setAttribute('href', './index.html');
+
+const img = document.createElement('img');
+img.setAttribute('src', './images/creamery.png');
+
 a1.appendChild(img);
 li1.appendChild(a1);
 
-const li2 = document.createElement("li");
-const a2 = document.createElement("a");
-a2.setAttribute("href", "./index.html");
-const h1_1 = document.createElement("h1");
-h1_1.textContent = "Home";
+const a2 = document.createElement('a');
+a2.setAttribute('href', './index.html');
+
+const h1_1 = document.createElement('h1');
+h1_1.textContent = 'Home';
+
 a2.appendChild(h1_1);
 li2.appendChild(a2);
 
-const li3 = document.createElement("li");
-const h1_2 = document.createElement("h1");
-const a3 = document.createElement("a");
-a3.setAttribute("href", "./about.html");
-a3.textContent = "About";
-h1_2.appendChild(a3);
-li3.appendChild(h1_2);
+const a3 = document.createElement('a');
+a3.setAttribute('href', './about.html');
 
-const li4 = document.createElement("li");
-const h1_3 = document.createElement("h1");
-const a4 = document.createElement("a");
-a4.setAttribute("href", "./contact.html");
-a4.textContent = "Contact";
-h1_3.appendChild(a4);
-li4.appendChild(h1_3);
+const h1_2 = document.createElement('h1');
+h1_2.textContent = 'About';
 
-const li5 = document.createElement("li");
-const h1_4 = document.createElement("h1");
-const a5 = document.createElement("a");
-a5.setAttribute("href", "./cart.html");
-a5.textContent = "Cart";
-h1_4.appendChild(a5);
-li5.appendChild(h1_4);
+a3.appendChild(h1_2);
+li3.appendChild(a3);
 
+const a4 = document.createElement('a');
+a4.setAttribute('href', './contact.html');
+
+const h1_3 = document.createElement('h1');
+h1_3.textContent = 'Contact';
+
+a4.appendChild(h1_3);
+li4.appendChild(a4);
+
+const a5 = document.createElement('a');
+a5.setAttribute('href', './cart.html');
+
+const h1_4 = document.createElement('h1');
+h1_4.textContent = 'Cart';
+
+a5.appendChild(h1_4);
+li5.appendChild(a5);
+
+// Append the list items to the ul element
 ul.appendChild(li1);
 ul.appendChild(li2);
 ul.appendChild(li3);
 ul.appendChild(li4);
 ul.appendChild(li5);
 
-nav.appendChild(ul);
-header.appendChild(nav);
+// Append the ul element to the div element
+div.appendChild(ul);
 
-// Add the header
-document.body.appendChild(header);
- }
+// Append the div element to the header
+const header = document.getElementsByTagName('header')[0];
+header.appendChild(div);
+}
 
 //building footer
 function footer(){
   //just have one file that does all this instead of repeating this element each time
-const footer = document.createElement('footer');
 const h4 = document.createElement('h4');
 h4.textContent = 'Thanks for visiting!';
+
 const span = document.createElement('span');
 const a = document.createElement('a');
-a.href = './management-login.html';
+a.setAttribute('href', './management-login.html');
 a.textContent = 'Employee Login';
 span.appendChild(a);
 h4.appendChild(span);
+
+//Append to the footer element
+const footer = document.getElementsByTagName('footer')[0];
 footer.appendChild(h4);
-document.body.appendChild(footer);
  }
 }

@@ -5,22 +5,21 @@
   <link rel="shortcut icon" type="image/x-icon" href="./images/creamery.png" />
   <link rel="stylesheet" href="./style.css">
   <script type="text/javascript" src="./js/creamery.js"></script>
+  <script type="text/javascript">
+    window.onload = function() {
+      header();
+      footer();
+      makeProducts(5);
+}
+  </script>
 </head>
 <body>
-<script type="text/javascript">
-header();
-</script>
+  <header></header>
 <div id="wrapper">
 <div class="text"><h3>Gallons and Pints</h3>
   <p>Ice cream is a frozen dessert that is made from a mixture of milk, cream, sugar, and flavorings. The mixture is churned in an ice cream machine to incorporate air and create a smooth and creamy texture. Ice cream can be made in many different flavors, such as vanilla, chocolate, strawberry, and mint chocolate chip, and can also include a variety of mix-ins, such as fruit, nuts, and candy.</p>
-
 </div>
 </div>
-<script type="text/javascript">
-makeProducts(5);
-</script>
-<script type="text/javascript">
-footer();
-</script>
+<footer></footer>
 </body>
 </html>

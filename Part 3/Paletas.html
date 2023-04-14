@@ -5,11 +5,16 @@
   <link rel="shortcut icon" type="image/x-icon" href="./images/creamery.png" />
   <link rel="stylesheet" href="./style.css">
   <script type="text/javascript" src="./js/creamery.js"></script>
+  <script type="text/javascript">
+    window.onload = function() {
+      header();
+      footer();
+      makeProducts(1);
+}
+  </script>
 </head>
 <body>
-  <script type="text/javascript">
-header();
-</script>
+  <header></header>
   <div id="wrapper">
     <div class="text">
       <h3>Paletas</h3>
@@ -17,11 +22,6 @@ header();
       <p>Paletas are a popular dessert or snack in many Latin American countries, and can be found in specialty shops or street vendors in the United States as well.</p>
     </div>
     </div>
-  <script type="text/javascript">
-  makeProducts(1);
-  </script>
-  <script type="text/javascript">
-footer();
-</script>
+<footer></footer>
 </body>
 </html>

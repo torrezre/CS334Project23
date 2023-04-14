@@ -4,11 +4,16 @@
   <link rel="shortcut icon" type="image/x-icon" href="./images/creamery.png" />
   <link rel="stylesheet" href="./style.css">
   <script src="./js/creamery.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    window.onload = function() {
+      header();
+      footer();
+      makeProducts(2);
+}
+  </script>
 </head>
 <body>
-<script type="text/javascript">
-header();
-</script>
+<header></header>
 <div id="wrapper">
 <div class="text">
   <h3>Mochi</h3>
@@ -16,11 +21,6 @@ header();
   <p>Mochi ice cream comes in a variety of flavors, such as green tea, strawberry, chocolate, and mango. It is often served as a dessert or snack, and can be found in many Asian grocery stores and Japanese restaurants around the world. The combination of the cold ice cream and the soft, chewy mochi dough makes for a unique and satisfying texture and taste experience.</p>
 </div>
 </div>
-<script type="text/javascript">
-  makeProducts(2);
-</script>
-<script type="text/javascript">
-footer();
-</script>
+<footer></footer>
 </body>
 </html>

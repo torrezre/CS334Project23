@@ -1,15 +1,19 @@
  
 <!doctype html>
-<title>Creamery - Home</title>
+<title>Creamery - Contact</title>
 <head>
   <link rel="shortcut icon" type="image/x-icon" href="./images/creamery.png" />
   <link rel="stylesheet" href="./style.css">
   <script type="text/javascript" src="./js/creamery.js"></script>
+  <script type="text/javascript">
+    window.onload = function() {
+      header();
+      footer();
+}
+  </script>
 </head>
 <body>
-<script type="text/javascript">
-header();
-</script>
+  <header></header>
 <div id="wrapper">
 <div class="text">
 Full Name<br>
@@ -17,15 +21,12 @@ Full Name<br>
 Message:<br>
 <textarea placeholder="Write here!" style="height:30vh;width:90%;"></textarea><p>
   <br>
-<button>Submit</button>></p>
-
+<button>Submit</button></p>
 </div>
 <div class="image">
 <img src="./images/helado.png">
 </div>
-
 </div>
-<script type="text/javascript">
-footer();
-</script>
+<footer></footer>
 </body>
+</html>
