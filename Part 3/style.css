@@ -204,9 +204,56 @@ body {
   max-width: 40%;
 }
 
+/*Cart*/
+/*cart innerHTML is emptied every time a cart item is deleted, so must be named differently to prevent deleting all content*/
 #cart, #cartTop, #cartBottom{
   flex: 0 0 100%;
   padding-left:33% !important;
+}
+
+#cart table {
+  border-collapse:collapse;
+}
+
+#cart thead th {
+  padding: 5px;
+  background-color: #efefef;
+}
+
+#cart tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+#cart tbody td {
+  padding: 20px;
+  text-align: center;
+}
+
+#cart tbody tr:nth-child(even) {
+  background-color: #e1e1e1;
+}
+
+/*don't want hover happening on Total*/
+#cart tbody tr:not(:last-child):hover{
+  background-color: #f0bbbb;
+}
+
+/*Checkout Form*/
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  display: inline-block;
+
+}
+
+input[type="text"], select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 /*button for add to cart / log in */

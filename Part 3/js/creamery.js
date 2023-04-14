@@ -112,10 +112,9 @@ function makeProducts(a){
         button.dataset.name = product.name;
         button.dataset.price = product.price;
         //making sure every add to cart button does actually add to cart
-        
         button.onclick = function(){addToCart(button.dataset.name,button.dataset.price);};  
 
-        // add the elements into the other elements
+        //add the elements into the other elements
         div.appendChild(img);
         div.appendChild(br);
         div.appendChild(h3);
@@ -145,7 +144,7 @@ function addToCart(name,price) {
   db.transaction(function(tx) {
     tx.executeSql('SELECT * FROM cart WHERE name = ?', [name], function(tx, result) {
       if (result.rows.length > 0) {
-        // product already exists in cart,
+        // product already exists in cart
         var existingProduct = result.rows.item(0);
         var newQuantity = existingProduct.quantity + quantity;
         tx.executeSql('UPDATE cart SET quantity = ? WHERE id = ?', [newQuantity, existingProduct.id], function(tx, result) {
@@ -180,7 +179,7 @@ function makeCart(){
       var th3 = document.createElement('th');
       var th4 = document.createElement('th');
 
-      th1.innerHTML = '<h3>Product Name</h3>';
+      th1.innerHTML = '<h3>Product</h3>';
       th2.innerHTML = '<h3>Price</h3>';
       th3.innerHTML = '<h3>Quantity</h3>';
       th4.innerHTML = '<h3>Delete</h3>';
