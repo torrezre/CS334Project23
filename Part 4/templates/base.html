@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='images/creamery.png') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+      <header>
+        <header>
+            <div class="nav">
+          <ul class ="row">
+            <li><a href="/"><img src="{{ url_for('static', filename='images/creamery.png') }}"></a></li>
+            <li><a href="/"><h1>Home</h1></a></li>
+            <li><h1><a href="./about.html">About</a></h1></li>
+            <li><h1><a href="./contact.html">Contact</a></h1></li>
+            <li><h1><a href="./cart">Cart</a></h1></li>
+          </ul>
+          </div></header>
+      </header>
+      <div id="wrapper">
+        {% block content %}{% endblock %}
+      </div>
+      <footer><h4>Thanks for visiting!<span><a href="./management-login.html">Employee Login</a> </span></h4></footer>
+  </body>
+</html>
