@@ -130,14 +130,16 @@ def delete_cart_all():
         db.session.rollback()
         return "Error deleting items from cart: " + str(e), 500
     
-def send_email(email, name):
+def send_email(email, name, products, order_total):
     try:
+        email_sender = 'contact@creamery.com'
         email_receiver = email
+        products = products.replace("<br>", "\n")
 
         subject = 'Thank you for your order!'
-        body = f'Dear {name},\n\nThank you for your order. Your order has been received and is being processed. We will notify you once your order is shipped.\n\nBest regards,\nThe Creamery Team'
+        body = f'Dear {name},\n\nThank you for your order. Your order has been received and is being processed. Here are the details of your order:\n\n{products}Order Total: ${order_total:.2f}\n\nWe will notify you once your order is shipped.\n\nBest regards,\nThe Creamery Team'
 
-        msg = Message(subject, recipients=[email_receiver], body=body)
+        msg = Message(subject, sender=email_sender, recipients=[email_receiver], body=body)
         mail.send(msg)
 
         return True
@@ -169,9 +171,9 @@ def checkout():
 
         # Add product to the list of products
         if quantity > 1:
-            products += f"{quantity} {product_name}<br>"
+            products += f"{quantity} {product_name} - ${item.price} ea. <br>"
         else:
-            products += f"{product_name}<br>"
+            products += f"{product_name} - ${item.price}<br>"
         
         # Add item total to order total
         item_total = price * quantity
@@ -181,6 +183,17 @@ def checkout():
     web_order = WebOrder(name=name, address=mailing_address, email=email, products=products, order_total=order_total)
     db.session.add(web_order)
     db.session.commit()
-    send_email(email,name)
+    send_email(email,name,products,order_total)
     delete_cart_all()
     return render_template('cart.html', success_message='Order placed successfully.')
+
+@app.route('/api/products', methods=['GET'])
+def get_products():
+    products = Products.query.all()
+    products_list = []
+    for product in products:
+        product_dict = {}
+        product_dict['name'] = product.name
+        product_dict['price'] = product.price
+        products_list.append(product_dict)
+    return jsonify({'products': products_list})

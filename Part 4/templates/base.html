@@ -8,7 +8,6 @@
     <script type="text/javascript" src="{{ url_for('static', filename='/js/creamery.js') }}"></script>
   </head>
   <body>
-      <header>
         <header>
             <div class="nav">
           <ul class ="row">
@@ -18,8 +17,8 @@
             <li><h1><a href="/contact">Contact</a></h1></li>
             <li><h1><a href="/cart">Cart</a></h1></li>
           </ul>
-          </div></header>
-      </header>
+          </div>
+        </header>
       <div id="wrapper">
         {% block content %}{% endblock %}
       </div>
