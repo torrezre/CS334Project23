@@ -39,7 +39,7 @@
     {% endif %}
   </div>
 
-  <div id="checkout-form" style="display:none;">
+  <div id="cartBottom" style="display:none;">
     <h2>Checkout</h2>
     <form action="{{ url_for('checkout') }}" method="POST">
       <label for="name">Name:</label>
@@ -54,8 +54,7 @@
       <input type="text" name="state" id="stateInput" required><br><br>
       <label for="zip">Zip:</label>
       <input type="text" name="zip" id="zipInput" required><br><br>
-      <button onclick="order()">Order</button>
+      <button type="submit" onclick="order()">Order</button>
     </form>
   </div>
 {% endblock %}
-

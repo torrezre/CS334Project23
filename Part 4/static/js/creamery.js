@@ -50,27 +50,9 @@ function deleteCartAll() {
 }
 
 function makeCheckout() {
-  document.getElementById("checkout-form").style.display = "block";
+  document.getElementById("cartBottom").style.display = "block";
 }
 
 function order() {
-  $.ajax({
-    url: "/check_out/",
-    method: "POST",
-    data : {
-      nameInput : $('#nameInput').val(),
-      emailInput : $('#emailInput').val(),
-      addressInput : $('#addressInput').val(),
-      cityInput : $('#cityInput').val(),
-      stateInput : $('#stateInput').val(),
-      zipInput : $('#zipInput').val()
-    },
-  success: function(response) {
-    console.log(response);
-    alert("Order Received!");
-  },
-  error: function(jqXHR, textStatus, errorThrown) {
-    console.log('Error completing order ' + errorThrown);
-  }
-});
+  alert("Order received!");
 }

@@ -205,8 +205,7 @@ body {
 }
 
 /*Cart*/
-/*cart innerHTML is emptied every time a cart item is deleted, so must be named differently to prevent deleting all content*/
-#cart, #cartTop, #cartBottom{
+#cart, #cartBottom{
   flex: 0 0 100%;
   padding-left:33% !important;
 }
@@ -251,7 +250,7 @@ label {
   max-width: 700px;
 }
 
-select, input[type="text"] {
+select, input[type="text"],input[type="email"] {
   width: 100%;
   max-width: 700px;
   padding: 5px;

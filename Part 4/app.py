@@ -189,7 +189,3 @@ def checkout():
     send_email(email,name)
     delete_cart_all()
     return render_template('cart.html', success_message='Order placed successfully.')
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
