@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Creamery - Cart{% endblock %}
+
+{% block content %}
+  <div id="cart">
+    <h2>Cart</h2>
+    {% if cart_items %}
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart_items %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>${{ item.price }}</td>
+          <td>{{ item.quantity }}</td>
+          <td><button onclick="deleteCartItem({{ item.id }})">X</button></td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="2"><h3>Total:</h3></td>
+          <td colspan="2"><h3>${{ "{:.2f}".format(total) }}</h3></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button onclick="makeCheckout()">Checkout</button>
+    <button onclick="deleteCartAll()">Clear Cart</button>
+
+    {% else %}
+    <p>Cart is empty!</p>
+    {% endif %}
+  </div>
+
+  <div id="checkout-form" style="display:none;">
+    <h2>Checkout</h2>
+    <form action="{{ url_for('checkout') }}" method="POST">
+      <label for="name">Name:</label>
+      <input type="text" name="name" id="nameInput" required><br><br>
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="emailInput" required><br><br>
+      <label for="address">Mailing Address:</label>
+      <input type="text" name="address" id="addressInput" required><br><br>
+      <label for="city">City:</label>
+      <input type="text" name="city" id="cityInput" required><br><br>
+      <label for="state">State:</label>
+      <input type="text" name="state" id="stateInput" required><br><br>
+      <label for="zip">Zip:</label>
+      <input type="text" name="zip" id="zipInput" required><br><br>
+      <button onclick="order()">Order</button>
+    </form>
+  </div>
+{% endblock %}
+

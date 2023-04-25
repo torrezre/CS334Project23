@@ -8,8 +8,8 @@
         {% for product in products %}
         <div class="image"><h3>{{ product.name }}</h3>
             <img src="{{ url_for('static', filename='images/' + product.img) }}">
-
-                        <a href="#" class="btn btn-primary">Add to Cart</a>
-                    </div>
+            <p><h4>${{ product.price }}</h3></p>
+            <button onclick="addToCart('{{ product.name }}', {{ product.price }})">Add to Cart</button>
+        </div>
         {% endfor %}
 {% endblock %}
