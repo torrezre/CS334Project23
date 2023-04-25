@@ -1,14 +1,19 @@
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from email.message import EmailMessage
-import ssl
-import smtplib
+from flask_mail import Mail, Message
 
-#Start table management
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myapp.db'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'g3n3r1c.stud3n7@gmail.com'
+app.config['MAIL_PASSWORD'] = 'jysaeirrhhkhihvs'
+app.config['MAIL_DEFAULT_SENDER'] = 'g3n3r1c.stud3n7@gmail.com'
+mail = Mail(app)
 db = SQLAlchemy(app)
 
+#Start table management
 # Define the database models
 class Cat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -127,24 +132,14 @@ def delete_cart_all():
     
 def send_email(email, name):
     try:
-        email_sender = 'g3n3r1c.stud3n7@gmail.com'
-        email_password = 'jysaeirrhhkhihvs'
         email_receiver = email
 
         subject = 'Thank you for your order!'
         body = f'Dear {name},\n\nThank you for your order. Your order has been received and is being processed. We will notify you once your order is shipped.\n\nBest regards,\nThe Creamery Team'
 
-        em = EmailMessage()
-        em['From'] = email_sender
-        em['To'] = email_receiver
-        em['Subject'] = subject
-        em.set_content(body)
+        msg = Message(subject, recipients=[email_receiver], body=body)
+        mail.send(msg)
 
-        context = ssl.create_default_context()
-
-        with smtplib.SMTP_SSL('smtp.gmail.com',465,context=context) as smtp:
-            smtp.login(email_sender,email_password)
-            smtp.sendmail(email_sender,email_receiver,em.as_string())
         return True
     except Exception as e:
         print(e)
