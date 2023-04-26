@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Creamery - Home{% endblock %}
+
+{% block content %}
+{% for category in categories %}
+        <div class="menu">
+        <a href="/category/{{ category.id }}">
+            <h3>{{ category.name }}</h3>
+            <img src="{{ url_for('static', filename='images/' + category.img) }}" alt="{{ category.name }}">
+        </a>
+    </div>
+    {% endfor %}
+{% endblock %}

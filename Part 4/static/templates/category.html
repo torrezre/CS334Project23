@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Creamery - {{ category.name }}{% endblock %}
+
+{% block content %}
+<div class="text"><h3>{{ category.name }}</h3>
+    {{ category.desc }}
+    </div>
+        {% for product in products %}
+        <div class="image"><h3>{{ product.name }}</h3>
+            <img src="{{ url_for('static', filename='images/' + product.img) }}">
+            <p><h4>${{ product.price }}</h3></p>
+            <button onclick="addToCart('{{ product.name }}', {{ product.price }})">Add to Cart</button>
+        </div>
+        {% endfor %}
+{% endblock %}
