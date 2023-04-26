@@ -6,6 +6,20 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='/js/creamery.js') }}"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('{{ url_for('static', filename='service-worker.js') }}')
+          .then(function(registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          })
+          .catch(function(error) {
+            console.log('ServiceWorker registration failed: ', error);
+          });
+        });
+      }
+    </script>
+    
   </head>
   <body>
         <header>
@@ -24,4 +38,5 @@
       </div>
       <footer><h4>Thanks for visiting!<span><a href="./management-login.html">Employee Login</a> </span></h4></footer>
   </body>
+
 </html>

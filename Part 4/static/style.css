@@ -1,0 +1,317 @@
+
+/*Start Fonts*/
+
+/*Importing normal body font*/
+@font-face {
+    font-family: 'Garamond';
+    src: url('./fonts/EBGaramond-VariableFont_wght.ttf') format('embedded-opentype'), /* Internet Explorer */
+         url('./fonts/EBGaramond-VariableFont_wght.ttf') format('woff2'),             /* Super Modern Browsers */
+         url('./fonts/EBGaramond-VariableFont_wght.ttf') format('woff'),              /* Pretty Modern Browsers */
+         url('./fonts/EBGaramond-VariableFont_wght.ttf') format('truetype'),          /* Safari, Android, iOS */
+         url('./fonts/EBGaramond-VariableFont_wght.ttf') format('svg');               /* Legacy iOS */
+         font-style: normal;
+         font-weight: 300 800;
+         font-display: swap;
+        }
+
+/*Importing italic body font*/
+
+@font-face {
+    font-family: 'Garamond';
+    src: url('./fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('embedded-opentype'), /* Internet Explorer */
+         url('./fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('woff2'),             /* Super Modern Browsers */
+         url('./fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('woff'),              /* Pretty Modern Browsers */
+         url('./fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('truetype'),          /* Safari, Android, iOS */
+         url('./fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('svg');               /* Legacy iOS */
+         font-style: italic;
+         font-weight: 300 800;
+         font-display: swap;
+        }
+
+/*Importing normal title font*/
+
+@font-face {
+    font-family: 'Josefin';
+    src: url('./fonts/JosefinSans-VariableFont_wght.ttf') format('embedded-opentype'), /* Internet Explorer */
+         url('./fonts/JosefinSans-VariableFont_wght.ttf') format('woff2'),             /* Super Modern Browsers */
+         url('./fonts/JosefinSans-VariableFont_wght.ttf') format('woff'),              /* Pretty Modern Browsers */
+         url('./fonts/JosefinSans-VariableFont_wght.ttf') format('truetype'),          /* Safari, Android, iOS */
+         url('./fonts/JosefinSans-VariableFont_wght.ttf') format('svg');               /* Legacy iOS */
+         font-style: normal;
+         font-weight: 300 800;
+         font-display: swap;
+        }
+
+/*Importing italic body font*/
+
+@font-face {
+    font-family: 'Josefin';
+    src: url('./fonts/JosefinSans-Italic-VariableFont_wght.ttf') format('embedded-opentype'), /* Internet Explorer */
+         url('./fonts/JosefinSans-Italic-VariableFont_wght.ttf') format('woff2'),             /* Super Modern Browsers */
+         url('./fonts/JosefinSans-Italic-VariableFont_wght.ttf') format('woff'),              /* Pretty Modern Browsers */
+         url('./fonts/JosefinSans-Italic-VariableFont_wght.ttf') format('truetype'),          /* Safari, Android, iOS */
+         url('./fonts/JosefinSans-Italic-VariableFont_wght.ttf') format('svg');               /* Legacy iOS */
+         font-style: italic;
+         font-weight: 300 800;
+         font-display: swap;
+        }
+/*End Fonts*/
+
+/*Begin main css*/
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} 
+
+/*overriding user agent stylesheet from browser*/
+
+body {
+  margin: 0;
+  height: 100%;
+  font-size: 1.25rem; /* equivalent to 20px */
+  font-family: 'Garamond', serif;
+  color: #3b2409;
+}
+
+/*Setting flexbox, setting up header, footer*/
+
+  header, footer, article {
+    padding: 10px;
+  }
+
+  footer {
+    background: #ee903b;
+    height: 10vh;
+  }
+
+  footer span{
+    float: right;
+    padding-right: 3px;
+  }
+
+  /*Making flexible nav bar*/
+  header{
+    height:25vh;
+    background: #ee903b;
+    }
+
+  header img{
+    max-width:50%;
+    min-width:10%;
+    max-height:20vh;
+    min-height:10%;
+  }
+  
+  header ul{
+    margin:0;
+    padding:0;
+    list-style-type: none;
+    display:flex;
+    justify-content: space-around;
+  }
+
+  header ul li{
+    cursor:pointer;
+    padding:5px;
+    flex:auto;
+    text-align:center;
+  }
+
+  header a,footer a{
+    text-decoration:none;
+    color: #3b2409;
+  }
+
+  header a:hover, footer a:hover{
+    color: #f0bbbb;
+  }
+
+  /*Setting header fonts/weights */
+  h1,h2,h3,h4,.button{
+    font-family: 'Josefin', sans-serif;
+  }
+  h1{
+    font-size: 42px;
+    font-weight: 800;
+    margin-top:10vh;
+  }
+  h2{
+    font-size: 36px;
+    font-weight: 600;
+  }
+  h3{
+    font-size: 28px;
+    font-weight: 400;
+  }
+
+  h4{
+    font-size: 22px;
+    font-weight: 400;
+    display: inline;
+  }
+
+  /*Making flexible display for most of every page's content*/
+  #wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vm;
+    margin:10px 0px 10px 5%;
+    height:80%;
+  }
+  
+  #wrapper div {
+    padding:10px;
+    width:auto;
+    height:auto;
+  }
+  
+  #wrapper img {
+    max-width:80%;
+    max-height:80vh;
+  }
+
+  .menu{
+    opacity: 0.8;
+    transition: 0.3s;
+    flex: 5 5 33%;
+  }
+
+  .menu:hover {
+    transform: scale(1.05);
+    opacity: 1;
+}
+  
+  .menu a{
+    text-decoration: none;
+    color:#3b2409;
+}
+
+.text {
+  flex: 0 5 80%;
+}
+
+.text p{
+  padding-bottom: 3%;
+  font-size:22px;
+ }
+
+.image {
+  flex: 5 5 25%;
+  max-width: 40%;
+}
+
+/*Cart*/
+#cart, #cartBottom{
+  flex: 0 0 100%;
+  padding-left:33% !important;
+}
+
+#cart table {
+  border-collapse:collapse;
+}
+
+#cart thead th {
+  padding: 5px;
+  background-color: #efefef;
+}
+
+#cart tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+#cart tbody td {
+  padding: 20px;
+  text-align: center;
+}
+
+#cart tbody tr:nth-child(even) {
+  background-color: #e1e1e1;
+}
+
+/*don't want hover happening on Total*/
+#cart tbody tr:not(:last-child):hover{
+  background-color: #f0bbbb;
+}
+
+/*Checkout Form*/
+form {
+  max-width: 700px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+label {
+  width: 100%;
+  max-width: 700px;
+}
+
+select, input[type="text"],input[type="email"] {
+  width: 100%;
+  max-width: 700px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.form-group {
+  flex-basis: calc(50% - 10px);
+}
+
+.form-group.zip {
+  margin-left: 20px;
+}
+
+/*button for add to cart / log in */
+.add-to-cart, button {
+	box-shadow:inset 0px 1px 0px 0px #fce2c1;
+	background-color: #ee903b;
+	border-radius:6px;
+	border:1px solid #eeb44f;
+	cursor:pointer;
+	color:white;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #cc9f52;
+}
+.add-to-cart:hover, button:hover {
+	background-color:#f0bbbb;
+}
+.add-to-cart:active, button:active {
+	position:relative;
+	top:1px;
+}
+
+/* Making everything scrunch together for mobile / small screens */
+@media all and (max-width: 500px) {
+  /*Header*/
+  h1{
+    margin-top:0;
+  }
+  header {
+    height:65vh;
+  }
+
+  header ul {
+    flex-direction: column;
+  }
+
+  header ul li {
+    text-align: center;
+  }
+  /*Content*/
+  
+  .wrapper {
+    flex-direction: column;
+  }
+
+  .menu,.text,.image{
+    flex-basis:100%;
+    min-width:100%;
+  }
+}
