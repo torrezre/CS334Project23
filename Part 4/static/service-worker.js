@@ -1,6 +1,7 @@
 const cacheName = 'flask-PWA';
 
 const filesToCache = [
+	'/',
 	'/static/fonts/EBGaramond-VariableFont_wght.ttf',
 	'/static/fonts/JosefinSans-VariableFont_wght.ttf',
 	'/static/style.css',
