@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <!-- Responsive -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+        <!-- Meta Tags required for Progressive Web App -->
+        <meta name="apple-mobile-web-app-status-bar" content="#aa7700">
+        <meta name="theme-color" content="black">
+
+        <!-- Manifest File link -->
+        <link rel="manifest" href="/static/manifest.json">
+
+		<title>Manager Login</title>
+		<link rel="stylesheet" href="/static/management.css">
+        <script>
+            window.addEventListener('load', () => {
+              registerSW();
+            });
+
+            // Register the Service Worker
+            async function registerSW() {
+              if ('serviceWorker' in navigator) {
+                try {
+                  await navigator
+                        .serviceWorker
+                        .register('/static/service-worker.js');
+                }
+                catch (e) {
+                  console.log('SW registration failed');
+                }
+              }
+            }
+         </script>
+	</head>
+	<body>
+	<div class="navbar">
+		<a class="active" href="#"><i class="icon logon"></i>Login</a>
+		<a href="management-inventory.html"><i class="icon inventory"></i>Inventory</a>
+		<a href="management-orders.html"><i class="icon orders"></i>Orders</a>
+	</div>
+	<div id="login">
+		<h1 id="header">Manager Login</h1>
+		<form id="myForm" method="post">
+			<label for="email" id="emaill">Username</label>
+			<input type="text" id="email" name="email"><br><br>
+			<label for="password" id="pwl">Password</label>
+			<input type="password" id="pw" name="pw"><br><br>
+			<input name="action" type="submit" id="loginbtn" value="Sign in">
+		</form>
+	</div>
+	<p id="status"></p>
+</body>
+</html>

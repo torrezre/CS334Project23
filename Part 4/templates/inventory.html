@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <!-- Responsive -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+        <!-- Meta Tags required for Progressive Web App -->
+        <meta name="apple-mobile-web-app-status-bar" content="#aa7700">
+        <meta name="theme-color" content="black">
+
+        <!-- Manifest File link -->
+        <link rel="manifest" href="/static/manifest.json">
+
+		<title>Inventory Manager</title>
+		<link rel="stylesheet" href="/static/management.css">
+        <script>
+            window.addEventListener('load', () => {
+              registerSW();
+            });
+
+            // Register the Service Worker
+            async function registerSW() {
+              if ('serviceWorker' in navigator) {
+                try {
+                  await navigator
+                        .serviceWorker
+                        .register('/static/service-worker.js');
+                }
+                catch (e) {
+                  console.log('SW registration failed');
+                }
+              }
+            }
+         </script>
+	</head>
+	<body>
+	<div class="navbar">
+		<a href="management-login.html"><i class="icon logon"></i>Login</a>
+		<a class="active" href="#"><i class="icon inventory"></i>Inventory</a>
+		<a href="management-orders.html"><i class="icon orders"></i>Orders</a>
+	</div>
+		<h1>Inventory Manager</h1>
+		<div id="main">
+			<div id="menu">
+				<form method="post">
+					<input type="submit" name="action" class="btn mochi" value="All">
+					<input type="submit" name="action" class="btn paletas" value="Paletas">
+					<input type="submit" name="action" class="btn mochi" value="Mochi">
+					<input type="submit" name="action" class="btn sandwiches" value="Sandwiches">
+					<input type="submit" name="action" class="btn bars" value="Bars">
+					<input type="submit" name="action"  class="btn gallons" value="Gallons and Pints">
+				</form>
+			</div>
+			<br>
+			<div id="products">
+				<br>
+				{% if session['category'] == "All" %}
+					<img id="productimage" src="/static/images/creamery.png" alt="paleta">
+				{% elif session['category'] == "Paletas" %}
+					<img id="productimage" src="/static/images/menu-paletas.png" alt="paleta">
+				{% elif session['category'] == "Mochi" %}
+					<img id="productimage" src="/static/images/menu-mochi.png" alt="mochi">
+				{% elif session['category'] == "Sandwiches" %}
+					<img id="productimage" src="/static/images/menu-sandwich.png" alt="sandwhich">
+				{% elif session['category'] == "Bars" %}
+					<img id="productimage" src="/static/images/menu-bar.png" alt="bar">
+				{% elif session['category'] == "Gallons and Pints" %}
+					<img id="productimage" src="/static/images/menu-gallons.png" alt="gallons">
+				{% endif %}
+				<br>
+				<table id="productList">
+                    <colgroup>
+                        <col span="1" style="width: 10%;">
+                        <col span="1" style="width: 30%;">
+                        <col span="1" style="width: 8%;">
+                        <col span="1" style="width: 5%;">
+                        <col span="1" style="width: 7%;">
+                        <col span="1" style="width: 20%;">
+                        <col span="1" style="width: 20%;">
+                    </colgroup>
+					<thead>
+						<th colspan="2">Product</th>
+						<th>Sale Price</th>
+						<th>Stock</th>
+						<th>Category</th>
+						<th>Image File</th>
+						<th colspan=>Actions</th>
+					</thead>
+					<tbody>
+						{% for row in rows %}
+						<tr>
+							<form method="post">
+								<td><img id="producticon" src="/static/images/{{ row.img }}"/></td>
+								<td><input type="text" class="{{ row.id }}" value="{{ row.id }}" name="id" style="display:none" disabled><input type="text" class="{{ row.id }}" name="name" value="{{ row.name }}" disabled></td>
+								<td><input type="text" class="{{ row.id }}" name="price" value="{{ row.price }}" disabled></td>
+								<td><input type="text" class="{{ row.id }}" name="quantity" value="{{ row.quantity }}" disabled></td>
+								<td><input type="text" class="{{ row.id }}" name="category" value="{{ row.cat_id }}" disabled></td>
+								<td><input type="text" class="{{ row.id }}" name="image" value="{{ row.img }}" disabled></td>
+								<td><input type="button" class="update" value="Edit" onclick="var inputs = document.getElementsByClassName('{{ row.id }}');for (var i = 0; i < inputs.length; i++){ inputs[i].disabled = !inputs[i].disabled;}
+                						if (this.value=='Save'){
+                						    this.disabled = false;
+                						    this.nextElementSibling.disabled = true;
+                						    this.nextElementSibling.nextElementSibling.disabled = true;
+                						}
+                						else if (this.value=='Edit'){
+                						    this.disabled = true;
+                						    this.nextElementSibling.disabled = false;
+                						    this.nextElementSibling.nextElementSibling.disabled = false;
+                						}
+                    			    ">
+        						    <input type="submit" class="update" name="action" value="Save" disabled>
+        						    <input type="submit" class="cancel" name="action" value="Delete" disabled>
+            				    </td>
+							</form>
+						</tr>
+					    {% endfor %}
+					</tbody>
+				</div>
+			</table>
+
+			<br><br>
+			<form id="login" class="flavored"  method="post">
+				<h2>Add Flavor</h2>
+				<div id="formAlign">
+					<label for="flavor">Flavor:</label>
+					<input type="text" id="flavor" name="flavor"><br>
+					<label for="Sale Price">Sale Price:</label>
+					<input type="text" id="salePrice" name="price"><br>
+					<label for="Stock">Stock:</label>
+					<input type="number" id="stock" min="0" name="stock"><br>
+					<label for="Category">Category:</label>
+					<select name="category" id="category" name="category">
+						<option value="1">Paletas</option>
+						<option value="2">Mochi</option>
+						<option value="3">Ice Cream Sandwiches</option>
+						<option value="4">Ice Cream Bars</option>
+						<option value="5">Gallons and Pints</option>
+					</select><br>
+					<label for="Image File">Image File:</label>
+					<input type="text" id="imageFile" name="image"><br><br>
+				</div><br>
+				<input type="submit" name="action" id="loginbtn" value="Add Flavor">
+			</form>
+		</div>
+	</body>
+</html>
