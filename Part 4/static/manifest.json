@@ -1,0 +1,17 @@
+{
+	"name" : "Mountain Creamery Client and Management Website",
+	"short_name" : "Mountain Creamery",
+	"start_url" : "index.html",
+	"display" : "standalone",
+	"background_color" : "#5900b3",
+	"theme_color" : "black",
+	"scope" : ".",
+	"description:" : "Part 4 of Web Development Class Group Project",
+	"icons" : [
+	{
+	"src" : "images/creamery.png",
+	"sizes" : "1288x1190",
+	"type" : "image/png"
+	}
+	]
+}

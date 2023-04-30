@@ -1,0 +1,294 @@
+/*Importing normal body font*/
+@font-face {
+    font-family: 'Garamond';
+    src: url('./fonts/EBGaramond-VariableFont_wght.ttf') format('embedded-opentype'), /* Internet Explorer */
+         url('./fonts/EBGaramond-VariableFont_wght.ttf') format('woff2'),             /* Super Modern Browsers */
+         url('./fonts/EBGaramond-VariableFont_wght.ttf') format('woff'),              /* Pretty Modern Browsers */
+         url('./fonts/EBGaramond-VariableFont_wght.ttf') format('truetype'),          /* Safari, Android, iOS */
+         url('./fonts/EBGaramond-VariableFont_wght.ttf') format('svg');               /* Legacy iOS */
+         font-style: normal;
+         font-weight: 300 800;
+         font-display: swap;
+}
+
+/*Univesral Management Pages Styles */
+body{
+	text-align: center;
+    font-family: 'Garamond', serif;
+}
+
+table{
+    table-layout: fixed;
+    width: 92%;
+	margin-left: auto;
+	margin-right: auto;
+    border: 1px solid #ddd;
+    border-spacing: 0;
+}
+
+tr:nth-child(even) {
+  background-color: #ffe3ba;
+}
+
+thead{
+  background-color: #ffb74a;
+}
+
+th{
+	padding: 10px;
+	word-wrap: break-word;
+}
+
+td{
+    overflow: hidden;
+	padding: 3px;
+}
+
+td input[type=text]{
+    width: 100%;
+}
+
+button{
+	transition-duration: 0.5s;
+	padding: 4px 10px;
+}
+
+input{
+	font-size: 1rem;
+	padding: 6px;
+}
+
+textarea{
+    width: 100%;
+}
+
+/* Top navigation bar for management pages*/
+.navbar {
+	height: 40px;
+	width: 100%;
+	background-color: #ee903b;
+	overflow: hidden;
+}
+
+.navbar a {
+	float: left;
+	text-align: center;
+	padding: 10px;
+	color: white;
+	text-decoration: none;
+	font-size: 1rem;
+}
+
+.navbar a:hover {
+	background-color: #ffaf38;
+}
+
+.icon {
+	width: 26px;
+	height: 30px;
+	background-position: 10% 0%;
+	background-size: 20px;
+	background-repeat: no-repeat;
+	float: left;
+}
+
+.active {
+	background-color: #b5771b;
+}
+
+.logon {
+	background-image: url("images/login.png");
+}
+.inventory {
+	background-image: url("images/inventory.png");
+}
+
+.orders {
+	background-image: url("images/orders.png");
+}
+
+
+/* Responsive design - vertical navbar if screen is less than 500 pixels*/
+@media screen and (max:width: 500px) {
+	.navbar a {
+		float: none;
+		display: block;
+	}
+}
+
+/* Manager Login Page */
+#login{
+    color: #573700;
+	box-shadow: 0px 0px 10px;
+	width: 30%;
+	min-width: 300px;
+	max-width: 450px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 15px;
+    background-color: #ffc670;
+}
+
+#loginbtn, #logoutbtn{
+	padding: 5px 10px;
+	margin: 5px;
+}
+
+#loginbtn{
+	border: 2px solid #87FF4F;
+	background-color: #60EC1F;
+	border-radius: 8px;
+}
+#loginbtn:hover{
+	background-color: #87FF4F;;
+}
+
+#logoutbtn{
+	border: 2px solid yellow;
+	background-color: #EFF775;
+	border-radius: 8px;
+}
+#logoutbtn:hover{
+	background-color: #F7FF82;
+}
+
+/* Inventory Management Page */
+/* Product category menu */
+.btn {
+	border: 2px solid black;
+	background-color: white;
+	color: black;
+	padding: 10px 20px;
+	font-size: 1.3rem;
+	cursor: pointer;
+	border-radius: 15px;
+}
+
+.paletas {
+	border-color: #f44336;
+	color: red;
+}
+
+.paletas:hover {
+	background: #f44336;
+	color: white;
+}
+
+.mochi {
+	border-color: #04AA6D;
+	color: green;
+}
+
+.mochi:hover {
+	background: #04AA6D;
+	color: white;
+}
+
+.bars {
+  border-color: #ff9800;
+  color: orange;
+}
+
+.bars:hover {
+	background: #ff9800;
+	color: white;
+}
+
+.sandwiches {
+	border-color: #9932CC;
+    color: purple;
+}
+
+.sandwiches:hover {
+	background: #9932CC;
+	color: white;
+}
+
+.gallons {
+	border-color: #2196F3;
+	color: dodgerblue;
+}
+
+.gallons:hover {
+	background: #2196F3;
+	color: white;
+}
+
+/* Product Tables */
+#producticon{
+	width: 50px;
+	height: 50px;
+}
+
+#productimage{
+	width: 300px;
+	height: 300px;
+	object-position: 80% 0%;
+	object-fit: cover;
+}
+
+.prodname{
+	text-align: left;
+}
+
+.custname{
+	text-align: left;
+}
+
+.flavored {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 5px;
+}
+
+.flavored select{
+	padding: 7px;
+	margin: 5px;
+}
+
+.flavored input{
+	margin: 5px;
+}
+
+.flavored button{
+	background: #46A619;
+	border-radius: 12px;
+	border: none;
+	color: white;
+	font-weight: 600;
+}
+
+.flavored button:hover{
+	background: #5CEE18;
+}
+
+
+#formAlign{
+	display: inline-block;
+	text-align: right;
+}
+
+/* Order Management Page */
+.update{
+    max-width: 50px;
+	font-weight: 600;
+	background: #49A24C;
+	border: 2px solid #49A24C;
+	margin: 2px
+}
+
+.update:hover{
+	background: #6FEA74;
+}
+
+.cancel{
+    max-width: 65px;
+	font-weight: 600;
+	background: #B33306;
+	border: 2px solid #B33306;
+	margin: 2px;
+}
+
+.cancel:hover{
+	background: #E67852;
+}
