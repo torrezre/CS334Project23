@@ -320,16 +320,16 @@ def loadInventory():
             return render_template('inventory.html', rows=products)
         else:
             if session['category'] == "Paletas":
-                products = Products.query.filter_by(cat_id=1)
+                products = Products.query.filter_by(cat_ID=1)
                 return render_template('inventory.html', rows=products)
             elif session['category'] == "Mochi":
-                products = Products.query.filter_by(cat_id=2)
+                products = Products.query.filter_by(cat_ID=2)
                 return render_template('inventory.html', rows=products)
             elif session['category'] == "Sandwiches":
-                products = Products.query.filter_by(cat_id=3)
+                products = Products.query.filter_by(cat_ID=3)
                 return render_template('inventory.html', rows=products)
             elif session['category'] == "Bars":
-                products = Products.query.filter_by(cat_id=4)
+                products = Products.query.filter_by(cat_ID=4)
                 return render_template('inventory.html', rows=products)
             elif session['category'] == "Gallons and Pints":
                 products = Products.query.filter_by(cat_id=5)
