@@ -69,10 +69,10 @@
 				{% for row in rows %}
 				<tr>
 					<form method="post">
-						<td><input type="text" name="id" value="{{ row.id }}" class="{{ row.id }}" disabled></td>
+						<td><input type="text" name="id" value="{{ row.id }}" class="{{ row.id }}" style="max-width: 40px" disabled></td>
 						<td><input type="text" name="name" value="{{ row.name }}" class="{{ row.id }}" disabled></td>
 						<td><textarea name="products" class="{{ row.id }}" disabled>{{ row.products }}</textarea></td>
-						<td><input type="text" name="total" value="{{ row.order_total }}" class="{{ row.id }}" disabled></td>
+						<td><input type="text" name="total" value="{{ row.order_total }}" class="{{ row.id }}" style="max-width: 50px" disabled></td>
 						<td><input type="text" name="address" value="{{ row.address }}" class="{{ row.id }}" disabled></td>
 						<td><input type="text" name="email" value="{{ row.email }}" class="{{ row.id }}" disabled></td>
 						<td><input type="button" class="update" value="Edit" onclick="var inputs = document.getElementsByClassName('{{ row.id }}');for (var i = 0; i < inputs.length; i++){ inputs[i].disabled = !inputs[i].disabled;}
