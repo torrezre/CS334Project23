@@ -332,7 +332,7 @@ def loadInventory():
                 products = Products.query.filter_by(cat_ID=4)
                 return render_template('inventory.html', rows=products)
             elif session['category'] == "Gallons and Pints":
-                products = Products.query.filter_by(cat_id=5)
+                products = Products.query.filter_by(cat_ID=5)
                 return render_template('inventory.html', rows=products)
             elif session['category'] == "All":
                 products = Products.query.all()
