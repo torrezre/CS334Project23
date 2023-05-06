@@ -4,14 +4,16 @@
 
 {% block content %}
 <div class="text">
+  <div class="desc">
     Full Name<br>
     <input type ="text" placeholder="Jane Doe"><br>
     Message:<br>
-    <textarea placeholder="Write here!" style="height:30vh;width:90%;"></textarea><p>
+    <textarea placeholder="Write here!"></textarea><p>
       <br>
     <button>Submit</button></p>
 </div>
   <div class="image">
-    <img src="{{ url_for('static', filename='images/' + 'helado.png') }}">
+    <img src="{{ url_for('static', filename='images/' + 'page-contact-icecream.png') }}">
+  </div>
   </div>
 {% endblock %}

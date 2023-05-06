@@ -2,9 +2,10 @@
 {% block title %}Creamery - {{ category.name }}{% endblock %}
 
 {% block content %}
-<div class="text"><h3>{{ category.name }}</h3>
-    {{ category.desc }}
-    </div>
+<div class="text"><div class="desc"><h3>{{ category.name }}</h3>
+    {{ category.desc|safe }}
+</div>    
+</div>
         {% for product in products %}
         <div class="image"><h3>{{ product.name }}</h3>
             <img src="{{ url_for('static', filename='images/' + product.img) }}">

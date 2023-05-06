@@ -1,0 +1,394 @@
+
+/*Start Fonts*/
+
+/*Importing normal body font*/
+@font-face {
+  font-family: 'Garamond';
+  src: url('./fonts/EBGaramond-VariableFont_wght.ttf') format('embedded-opentype'), /* Internet Explorer */
+       url('./fonts/EBGaramond-VariableFont_wght.ttf') format('woff2'),             /* Super Modern Browsers */
+       url('./fonts/EBGaramond-VariableFont_wght.ttf') format('woff'),              /* Pretty Modern Browsers */
+       url('./fonts/EBGaramond-VariableFont_wght.ttf') format('truetype'),          /* Safari, Android, iOS */
+       url('./fonts/EBGaramond-VariableFont_wght.ttf') format('svg');               /* Legacy iOS */
+       font-style: normal;
+       font-weight: 300 800;
+       font-display: swap;
+      }
+
+/*Importing italic body font*/
+
+@font-face {
+  font-family: 'Garamond';
+  src: url('./fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('embedded-opentype'), /* Internet Explorer */
+       url('./fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('woff2'),             /* Super Modern Browsers */
+       url('./fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('woff'),              /* Pretty Modern Browsers */
+       url('./fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('truetype'),          /* Safari, Android, iOS */
+       url('./fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('svg');               /* Legacy iOS */
+       font-style: italic;
+       font-weight: 300 800;
+       font-display: swap;
+      }
+
+/*Importing normal title font*/
+
+@font-face {
+  font-family: 'Josefin';
+  src: url('./fonts/JosefinSans-VariableFont_wght.ttf') format('embedded-opentype'), /* Internet Explorer */
+       url('./fonts/JosefinSans-VariableFont_wght.ttf') format('woff2'),             /* Super Modern Browsers */
+       url('./fonts/JosefinSans-VariableFont_wght.ttf') format('woff'),              /* Pretty Modern Browsers */
+       url('./fonts/JosefinSans-VariableFont_wght.ttf') format('truetype'),          /* Safari, Android, iOS */
+       url('./fonts/JosefinSans-VariableFont_wght.ttf') format('svg');               /* Legacy iOS */
+       font-style: normal;
+       font-weight: 300 800;
+       font-display: swap;
+      }
+
+/*Importing italic body font*/
+
+@font-face {
+  font-family: 'Josefin';
+  src: url('./fonts/JosefinSans-Italic-VariableFont_wght.ttf') format('embedded-opentype'), /* Internet Explorer */
+       url('./fonts/JosefinSans-Italic-VariableFont_wght.ttf') format('woff2'),             /* Super Modern Browsers */
+       url('./fonts/JosefinSans-Italic-VariableFont_wght.ttf') format('woff'),              /* Pretty Modern Browsers */
+       url('./fonts/JosefinSans-Italic-VariableFont_wght.ttf') format('truetype'),          /* Safari, Android, iOS */
+       url('./fonts/JosefinSans-Italic-VariableFont_wght.ttf') format('svg');               /* Legacy iOS */
+       font-style: italic;
+       font-weight: 300 800;
+       font-display: swap;
+      }
+/*End Fonts*/
+
+/*Begin main css*/
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+} 
+
+[hidden] {
+  display: none;
+}
+
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+body {
+  min-height: 100vh;
+height: 100vh;
+margin: 0;
+height: 100%;
+width:100%;
+font-size: 1.25rem; /* equivalent to 20px */
+font-family: 'Garamond', serif;
+color: #3b2409;
+display: flex !important;
+flex-wrap: wrap;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+}
+
+/*header*/
+header, footer {
+  display: flex;
+  width:100%;
+  background: #ee903b;
+  padding:5px;
+    justify-content: center;
+  }
+
+/*header links and header font sizes in general*/
+header a,footer a{
+  text-decoration:none;
+  color: #3b2409;
+}
+
+header a:hover, footer a:hover{
+  color: #f0bbbb;
+}
+
+#navContainer{
+  display:flex;
+  width:80%;
+}
+
+.row{
+  list-style-type: none;
+  display:flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.bottomRow{
+  list-style-type: none;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav{
+  width:100%;
+}
+
+li,ul{
+  white-space:nowrap;
+  display:flex;
+  padding:0;
+}
+
+li.icon{
+  flex-basis:10%;
+  max-width: 10%;
+  max-height: 10%;
+}
+
+li img{
+  max-width: 100%;
+}
+
+/*Setting header fonts/weights */
+h1,h2,h3,h4,.button{
+  font-family: 'Josefin', sans-serif;
+}
+
+h1{
+  font-size: 42px;
+  font-weight: 800;
+  margin: 0.67em 0;
+}
+h2{
+  font-size: 36px;
+  font-weight: 600;
+}
+h3{
+  font-size: 28px;
+  font-weight: 400;
+}
+
+h4{
+  font-size: 22px;
+  font-weight: 400;
+}
+
+a {
+  background-color: transparent;
+}
+
+/*done with header*/
+
+/*body*/
+/*Wrapper div, fixing flexbox that's been broken for 2 months*/
+#wrapper{
+  flex:1;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-content: center;
+  padding:10px;
+  width:80%;
+}
+
+#wrapper img {
+  max-width:80%;
+  max-height:80vh;
+}
+
+.menu {
+  display: flex;
+  flex-basis: 33%;
+  flex-grow: 1;
+  max-width: 50%;
+  padding: 10px;
+  opacity: 0.8;
+  transition: 0.3s;
+  justify-content: center; /* center horizontally */
+  align-items: center; /* center vertically */
+}
+
+.menu:hover {
+  transform: scale(1.02);
+  opacity: 1;
+}
+
+.menu a{
+  text-decoration: none;
+  color:#3b2409;
+}
+
+.text{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.desc{
+  flex-grow: 1;
+  font-size:22px;
+}
+
+.desc span{
+  white-space: pre-wrap;
+  font-size: 18px;
+}
+
+.desc p{
+  padding-bottom: 10px;
+}
+
+.image{
+  flex-basis: 20%;
+  flex-grow: 1;
+  max-width: 50%;
+  padding: 10px;
+  min-width: 20%;
+}
+
+
+/*done with body*/
+
+/*Cart*/
+#cartContainer{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  }
+  
+  #cart table {
+  border-collapse:collapse;
+  }
+  
+  #cart thead th {
+  padding: 5px;
+  background-color: #efefef;
+  }
+  
+  #cart tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+  }
+  
+  #cart tbody td {
+  padding: 20px;
+  text-align: center;
+  }
+  
+  #cart tbody tr:nth-child(even) {
+  background-color: #e1e1e1;
+  }
+  
+  /*don't want hover happening on Total*/
+  #cart tbody tr:not(:last-child):hover{
+  background-color: #f0bbbb;
+  }
+  
+  /*Checkout Form*/
+  form {
+  max-width: 700px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  }
+  
+  label {
+  width: 100%;
+  max-width: 700px;
+  }
+  
+  select, input[type="text"],input[type="email"],textarea {
+  width: 100%;
+  max-width: 700px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  }
+  
+  .form-group {
+  flex-basis: calc(50% - 10px);
+  }
+  
+  .form-group.zip {
+  margin-left: 20px;
+  }
+  
+  /*button for add to cart / log in */
+  .add-to-cart, button {
+  box-shadow:inset 0px 1px 0px 0px #fce2c1;
+  background-color: #ee903b;
+  border-radius:6px;
+  border:1px solid #eeb44f;
+  cursor:pointer;
+  color:white;
+  font-weight:bold;
+  padding:6px 24px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #cc9f52;
+  }
+  .add-to-cart:hover, button:hover {
+  background-color:#f0bbbb;
+  }
+  .add-to-cart:active, button:active {
+  position:relative;
+  top:1px;
+  }
+
+  @media only screen and (max-width: 900px) {
+        /*Header*/
+        h1{
+          margin-top:0;
+        }
+        header {
+          height:auto;
+        }
+
+        li img{
+          width: 100%;
+        }
+      
+       ul {
+          flex-direction: column;
+        }
+      
+       ul li {
+          text-align: center;
+        }
+        /*Content*/
+        
+        body{
+          width:100%;
+          font-size: 11px;
+        }
+      
+        #wrapper,.text,.bottomRow {
+          flex-direction: column;
+          min-width: 100%;
+        }
+      
+        .menu,.image{
+          min-width:100%;
+        }
+
+        h1{
+          font-size: 30px;
+          font-weight: 800;
+          margin: 0.67em 0;
+        }
+        h2{
+          font-size: 26px;
+          font-weight: 600;
+        }
+        h3{
+          font-size: 18px;
+          font-weight: 400;
+        }
+        
+        h4{
+          font-size: 12px;
+          font-weight: 400;
+        }
+
+      }

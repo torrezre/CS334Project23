@@ -3,6 +3,7 @@
 {% block title %}Creamery - Cart{% endblock %}
 
 {% block content %}
+<div id="cartContainer">
   <div id="cart">
     <h2>Cart</h2>
     {% if cart_items %}
@@ -57,4 +58,5 @@
       <button type="submit" onclick="order()">Order</button>
     </form>
   </div>
+</div>
 {% endblock %}
