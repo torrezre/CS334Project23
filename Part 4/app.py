@@ -251,9 +251,9 @@ def checkout():
 
         # Add product to the list of products
         if quantity > 1:
-            products += f"{quantity} {product_name} - ${item.price} ea. <br>"
+            products += f"{quantity} {product_name} - ${item.price} ea. \r\n"
         else:
-            products += f"{product_name} - ${item.price}<br>"
+            products += f"{product_name} - ${item.price}\r\n"
         
         # Add item total to order total
         item_total = price * quantity
