@@ -7,11 +7,9 @@
 	"theme_color" : "black",
 	"scope" : ".",
 	"description:" : "Part 4 of Web Development Class Group Project",
-	"icons" : [
-	{
+	"icons" : [{
 	"src" : "images/creamery.png",
-	"sizes" : "1288x1190",
+	"sizes" : "144x144",
 	"type" : "image/png"
-	}
-	]
+	}]
 }
